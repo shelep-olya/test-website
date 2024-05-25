@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Puppy test</title>
+   
+</head>
+<body class="home-body">
+    <%- include('./partials/header.ejs') %>
+    <h1>hi, it's the puppy website. we'll help you to find out who you really are. </h1>
+    <a href="./test.ejs">test's here</a>
+    <div>
+        <p>Hope you like puppies</p>
+
+        <img class="dog-image" id="dog-image" src="" alt="dog photo" width="600px" height="400">
+    </div>
+   
+    <button id="change-photo">Click here</button>
+    <script>
+        async function fetchRandomDogPhoto() {
+            const response = await fetch('https://dog.ceo/api/breeds/image/random');
+            const data = await response.json();
+            return data.message;
+        }
+
+        async function changePhoto() {
+            const dogImage = document.getElementById('dog-image');
+            const newImageUrl = await fetchRandomDogPhoto();
+            dogImage.src = newImageUrl; 
+        }
+        window.onload = changePhoto;
+
+        document.getElementById('change-photo').addEventListener('click', changePhoto);
+    </script>
+    <%- include('./partials/footer.ejs') %>
+</body>
+
+
+
+</html>

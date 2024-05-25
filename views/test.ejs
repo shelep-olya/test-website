@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Test Form</title>
+</head>
+<body class="auth-body">
+    <%- include('./partials/header.ejs') %>
+    <div class="main-content">
+        <form action="/submit" method="post" class="form-container">
+            <p>Your favourite drink</p>
+            <input type="radio" name="drink" value="coffee"> Coffee<br>
+            <input type="radio" name="drink" value="tea"> Tea<br>
+            <input type="radio" name="drink" value="pivo"> Pivo<br>
+
+            <p>Your favourite color</p>
+            <input type="radio" name="color" value="green"> Green<br>
+            <input type="radio" name="color" value="blue"> Blue<br>
+            <input type="radio" name="color" value="yellow"> Yellow<br>
+
+            <p>Your favourite activity</p>
+       
+            <input type="radio" name="activity" value="coding"> Coding<br>
+            <input type="radio" name="activity" value="computer games"> Computer games<br>
+            <input type="radio" name="activity" value="communicating with people"> Communicating with people<br>
+            <input type="submit" value="Submit" class="submit-btn">
+        </form>
+    </div>
+    <%- include('./partials/footer.ejs') %>
+</body>
+</html>

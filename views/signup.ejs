@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Signup</title>
+</head>
+
+<body class="auth-body">
+    <%- include('./partials/header.ejs') %>
+    <div class="main-content">
+       
+    
+    <div class="form-container">
+        <h2>SignUp</h2>
+        <form action="/auth/signup" method="post">
+            <div class="name-form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="username" placeholder="Enter your name" required autocomplete="off">
+            </div>
+            <div class="name-form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required autocomplete="off">
+            </div>
+                <div class="name-form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" id="password" placeholder="Password" required>
+
+                </div>
+                <div class="name-form-group">
+                    <label for="passwordConfirm">Confirm your password</label>
+                    <input type="password" name="passwordConfirm" id="passwordConfirm" placeholder="Password confirm" required>
+
+                </div>
+              
+                <button type="submit" class="submit-btn">Sign up</button>
+        </form>
+    </div>
+</div>
+    <%- include('./partials/footer.ejs') %>
+
+</body>
+
+</html>
+
+
+
+
