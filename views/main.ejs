@@ -4,35 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/styles/style.css">
-    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>home</title>
 </head>
-<body>
+<body class="main">
     <%- include('./partials/header.ejs') %>
-    <h1>hi, it's the puppy website. we'll help you to find out who you really are. </h1>
-    <a href="/test">test's here</a>
-    <div>
-        <p>Hope you like puppies</p>
+    <p>здавалося б все -- можна вішатись,</p>
+    <h1>але</h1>
+    <a href="/test.ejs" class="test-link">пройдіть короткий тест на тип особистості за Шелеп</a>
+    <div class="image">
+        <img  id="cute-image" src="" alt="cute photo" width="400px">
 
-        <img class="dog-image" id="dog-image" src="" alt="dog photo" width="600px" height="400">
+<script>
+    let imageIndex = 0;
+    let images = [
+    'cute.jpg', 
+     'cute.jpg',
+     'cute2.jpg',
+     'cute3.jpg',
+     'cute4.jpg',
+     'cute5.jpg',
+     'cute6.jpg',
+     'cute7.jpg',
+    ];
+
+    function getRandomImage() {
+            const filteredImages = images.filter(image => image.startsWith('c'));
+            const randomIndex = Math.floor(Math.random() * filteredImages.length);
+            return filteredImages[randomIndex];
+        }
+        function changePhoto() {
+            const cuteImage = document.getElementById('cute-image');
+            const newImageUrl = `/images/${getRandomImage()}`;
+            cuteImage.src = newImageUrl;
+        }
+
+    window.onload = () => {
+        changePhoto();
+        setInterval(changePhoto, 1000 *60 * 10);
+    };
+</script>
     </div>
-   
-    <button id="change-photo">Click here</button>
-    <script>
-        async function fetchRandomDogPhoto() {
-            const response = await fetch('https://dog.ceo/api/breeds/image/random');
-            const data = await response.json();
-            return data.message;
-        }
 
-        async function changePhoto() {
-            const dogImage = document.getElementById('dog-image');
-            const newImageUrl = await fetchRandomDogPhoto();
-            dogImage.src = newImageUrl; 
-        }
-        window.onload = changePhoto;
-
-        document.getElementById('change-photo').addEventListener('click', changePhoto);
-    </script>
     <%- include('./partials/footer.ejs') %>
 </body>
 </html>

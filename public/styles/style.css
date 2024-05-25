@@ -2,22 +2,35 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
 }
-.test-body {
-  font-family: Arial, sans-serif;
-  background-color: #f8f9fa;
+body {
   margin: 0;
   padding: 0;
+  background-image: url("./../images/frog.jpg");
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
   display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100vh;
+  flex-direction: column;
 }
 
-.auth-body {
+.content {
+  flex: 1;
+}
+.image {
   display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  justify-content: center;
+  align-items: center; /* Це також центрує зображення вертикально всередині контейнера */
+  height: 100vh;
+}
+.main p {
+  color: #fff;
+  text-align: center;
+}
+.main h1 {
+  color: #fff;
+  text-align: center;
 }
 h2 {
   text-align: center;
@@ -25,6 +38,13 @@ h2 {
 }
 .name-form-group {
   margin-bottom: 15px;
+}
+.test-link {
+  margin-top: 30px;
+  margin-bottom: 0px;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
 }
 .name-form-group label {
   display: block;
@@ -37,18 +57,6 @@ h2 {
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 3px;
-}
-header,
-footer {
-  flex-shrink: 0;
-}
-body,
-html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
 }
 .main-content {
   flex-grow: 1;
@@ -92,12 +100,23 @@ input[type="radio"] {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: #fff;
 }
-.header,
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between; /* Space between the elements */
+  align-items: center; /* Center the elements vertically */
+  padding: 10px;
+  background-color: #333;
+  color: #fff;
+}
+
 .footer {
+  width: 100%;
   border-radius: 3px;
   background-color: #333;
   color: #fff;
   padding: 20px;
+  text-align: center;
 }
 .a-test {
   display: block;
@@ -110,16 +129,20 @@ input[type="radio"] {
   text-decoration: dotted;
 }
 .header nav ul {
-  list-style-type: none;
-  margin: 0;
+  display: flex;
+  list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .header nav ul li {
-  display: inline;
-  margin-right: 20px;
+  margin-left: 20px;
 }
 .header nav ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+.header nav ul li p {
   color: #fff;
   text-decoration: none;
 }
