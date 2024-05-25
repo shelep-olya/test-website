@@ -21,11 +21,10 @@ const createAndSendToken = (user, statusCode, res) => {
     token,
   });
 };
-
 exports.signup = catchAsync(async (req, res, next) => {
   const data = {
     name: req.body.username,
-    password: req.body.password,
+    pasword: req.body.pasword,
     passwordConfirm: req.body.passwordConfirm,
     email: req.body.email,
   };
@@ -34,19 +33,24 @@ exports.signup = catchAsync(async (req, res, next) => {
 });
 
 exports.login = catchAsync(async (req, res, next) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return next(new Error("Please provide password & email.", 400));
+  const email = req.body.email;
+  const pasword = req.body.pasword;
+  console.log(req.body);
+  if (!email || !pasword) {
+    return next(new AppError("Please provide password & email.", 400));
   }
   const user = await User.findOne({ email }).select("+password");
-  if (!user || !(await user.correctPassword(password, user.password))) {
+  if (!user || !(await user.correctPassword(pasword, user.password))) {
     return next(new AppError("Incorrect password or email.", 401));
   }
   createAndSendToken(user, 200, res);
 });
 exports.protect = catchAsync(async (req, res, next) => {
   let token;
-  if (req.headers.authorization && req.headers.startsWith("Bearer")) {
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
     token = req.headers.authorization.split(" ")[1];
   }
   if (!token) {
