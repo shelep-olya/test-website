@@ -24,7 +24,7 @@ const createAndSendToken = (user, statusCode, res) => {
 exports.signup = catchAsync(async (req, res, next) => {
   const data = {
     name: req.body.username,
-    pasword: req.body.pasword,
+    password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
     email: req.body.email,
   };
@@ -34,16 +34,18 @@ exports.signup = catchAsync(async (req, res, next) => {
 
 exports.login = catchAsync(async (req, res, next) => {
   const email = req.body.email;
-  const pasword = req.body.pasword;
+  const password = req.body.password;
   console.log(req.body);
-  if (!email || !pasword) {
+  if (!email || !password) {
     return next(new AppError("Please provide password & email.", 400));
   }
+  console.log(req.body);
   const user = await User.findOne({ email }).select("+password");
-  if (!user || !(await user.correctPassword(pasword, user.password))) {
+  if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError("Incorrect password or email.", 401));
   }
   createAndSendToken(user, 200, res);
+  res.redirect("/home");
 });
 exports.protect = catchAsync(async (req, res, next) => {
   let token;

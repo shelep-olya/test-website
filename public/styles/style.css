@@ -146,3 +146,21 @@ input[type="radio"] {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: #fff;
 }
+/* TEST  */
+
+.test-wrapper {
+  margin: 12px 30px;
+  width: 600px;
+  background-color: #b7c2b7;
+  border-radius: 16px;
+  padding-bottom: 12px;
+}
+.wrap {
+  align-items: center;
+}
+.question {
+  padding: 10px;
+}
+.answer {
+  margin: 10px;
+}
