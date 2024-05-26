@@ -11,15 +11,15 @@ const signToken = (id) => {
   });
 };
 
-const createAndSendToken = (user, statusCode, res) => {
+const createAndSendToken = (user, statusCode, res, redirectUrl) => {
   const token = signToken(user._id);
-  res.status(statusCode).json({
-    status: "success",
-    data: {
-      user,
-    },
-    token,
+  res.cookie("jwt", token, {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+    ),
+    httpOnly: true,
   });
+  res.status(statusCode).redirect(redirectUrl);
 };
 exports.signup = catchAsync(async (req, res, next) => {
   const data = {
@@ -29,7 +29,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     email: req.body.email,
   };
   const newUser = await User.create(data);
-  createAndSendToken(newUser, 201, res);
+  createAndSendToken(newUser, 201, res, "/main.ejs");
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -44,8 +44,7 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError("Incorrect password or email.", 401));
   }
-  createAndSendToken(user, 200, res);
-  res.redirect("/home");
+  createAndSendToken(user, 200, res, "/main.ejs");
 });
 exports.protect = catchAsync(async (req, res, next) => {
   let token;

@@ -5,4 +5,8 @@ const router = express.Router();
 router.post("/signup", authController.signup);
 router.post("/login", authController.login);
 
+router.get("/main.ejs", (req, res) => {
+  res.render("main");
+});
+
 module.exports = router;

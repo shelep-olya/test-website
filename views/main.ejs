@@ -14,39 +14,39 @@
 </div>
     <a href="/test.ejs" class="test-link">пройдіть короткий тест на тип особистості за Шелеп</a>
     <div class="image">
-        <img  id="cute-image" src="" alt="cute photo" width="400px">
+        <img  id="cute-image" src="/images/cute5.jpg" alt="cute photo" width="400px">
 
 <script>
     let imageIndex = 0;
-    let images = [
-    'cute.jpg', 
-     'cute.jpg',
-     'cute2.jpg',
-     'cute3.jpg',
-     'cute4.jpg',
-     'cute5.jpg',
-     'cute6.jpg',
-     'cute7.jpg',
-    ];
+let images = [
+  "cute.jpg",
+  "cute.jpg",
+  "cute2.jpg",
+  "cute3.jpg",
+  "cute4.jpg",
+  "cute5.jpg",
+  "cute6.jpg",
+  "cute7.jpg",
+];
 
-    function getRandomImage() {
-            const filteredImages = images.filter(image => image.startsWith('c'));
-            const randomIndex = Math.floor(Math.random() * filteredImages.length);
-            return filteredImages[randomIndex];
-        }
-        function changePhoto() {
-            const cuteImage = document.getElementById('cute-image');
-            const newImageUrl = `/images/${getRandomImage()}`;
-            cuteImage.src = newImageUrl;
-        }
+function getRandomImage() {
+  const filteredImages = images.filter((image) => image.startsWith("c"));
+  const randomIndex = Math.floor(Math.random() * filteredImages.length);
+  return filteredImages[randomIndex];
+}
+function changePhoto() {
+  const cuteImage = document.getElementById("cute-image");
+  const newImageUrl = `/images/${getRandomImage()}`;
+  cuteImage.src = newImageUrl;
+}
 
-    window.onload = () => {
-        changePhoto();
-        setInterval(changePhoto, 1000 *60 * 10);
-    };
+window.onload = () => {
+  changePhoto();
+  setInterval(changePhoto, 1000 * 60 * 10);
+};
+
 </script>
     </div>
-
     <%- include('./partials/footer.ejs') %>
 </body>
 </html>
