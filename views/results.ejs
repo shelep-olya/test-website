@@ -8,12 +8,44 @@
 </head>
 <body class="auth-body">
     <%- include('./partials/header.ejs') %>
+    
     <div class="main-container">
         <h2>Results</h2>
         <p><%= resMessage %></p>
         <a href="/" class="test">Go back to home or </a>
-        <a href="/signup.ejs">sign up and continue </a>
-    </div>
+        <a href="/signup.ejs" class="test">sign up and continue </a>
+   
+    <div class="image">
+        <img  id="cute-image" src="/images/cute-img.jpg" alt="cute img" width="400px">
+
+<script>
+    let imageIndex = 0;
+let images = [
+  "cute-img.jpg",
+  "cute.jpg",
+  "cute1.jpg",
+  "cute2.jpg",
+  "cute3.jpg",
+  "cute5.jpg",
+  "cute6.jpg",
+];
+function getRandomImage() {
+  const randomIndex = Math.floor(Math.random() * images.length);
+  return images[randomIndex];
+}
+function changePhoto() {
+  const cuteImage = document.getElementById("cute-image");
+  const newImageUrl = `/images/${getRandomImage()}`;
+  cuteImage.src = newImageUrl;
+}
+
+window.onload = () => {
+  changePhoto();
+  setInterval(changePhoto, 1000 * 60 * 10);
+};
+
+</script>
+</div>
     <%- include('./partials/footer.ejs') %>
 </body>
 </html>

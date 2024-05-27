@@ -48,9 +48,13 @@ app.get("/signup.ejs", (req, res) => {
   res.render("signup");
 });
 
-app.get("auth/signup", (req, res) => {
-  res.render("signedup");
+app.get("/welcome.ejs", (req, res) => {
+  res.render("welcome");
 });
+app.get("/home.ejs", (req, res) => {
+  res.render("home");
+});
+
 app.post("/submit", (req, res) => postResFunc(req, res));
 
 module.exports = app;
