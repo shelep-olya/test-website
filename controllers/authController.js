@@ -19,7 +19,7 @@ const createAndSendToken = (user, statusCode, res, redirectUrl) => {
     ),
     httpOnly: true,
   });
-  res.status(statusCode).redirect(redirectUrl);
+  res.status(statusCode).render(redirectUrl, { user });
 };
 exports.signup = catchAsync(async (req, res, next) => {
   const data = {
@@ -28,8 +28,9 @@ exports.signup = catchAsync(async (req, res, next) => {
     passwordConfirm: req.body.passwordConfirm,
     email: req.body.email,
   };
+  console.log(data);
   const newUser = await User.create(data);
-  createAndSendToken(newUser, 201, res, "/welcome.ejs");
+  createAndSendToken(newUser, 201, res, "welcome");
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -44,7 +45,7 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError("Incorrect password or email.", 401));
   }
-  createAndSendToken(user, 200, res, "/home.ejs");
+  createAndSendToken(user, 200, res, "home");
 });
 exports.protect = catchAsync(async (req, res, next) => {
   let token;
