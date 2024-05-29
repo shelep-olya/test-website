@@ -176,3 +176,6 @@ input[type="radio"] {
 .answer {
   margin: 10px;
 }
+.test-submit {
+  align-items: center;
+}
