@@ -1,11 +1,9 @@
 const express = require("express");
 const rateLimit = require("express-rate-limit");
 const { postResFunc } = require("./utils/test-functionallity");
-const path = require("path");
 const bodyParser = require("body-parser");
-const authController = require("./controllers/authController");
 const userRouter = require("./routes/userRoutes");
-const ejs = require("ejs");
+const testRouter = require("./routes/testRoutes");
 
 const app = express();
 
@@ -22,6 +20,7 @@ const limiter = rateLimit({
 });
 app.use("/", limiter);
 app.use("/auth", userRouter);
+app.use("/", testRouter);
 
 app.get("/", (req, res) => {
   res.render("main");
@@ -53,6 +52,12 @@ app.get("/welcome.ejs", (req, res) => {
 });
 app.get("/home.ejs", (req, res) => {
   res.render("home");
+});
+app.get("/createTest.ejs", (req, res) => {
+  res.render("createTest");
+});
+app.get("/moreTests.ejs", (req, res) => {
+  res.render("moreTests");
 });
 
 app.post("/submit", (req, res) => postResFunc(req, res));

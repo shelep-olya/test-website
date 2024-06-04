@@ -1,3 +1,6 @@
+module.exports = (fn) => (req, res, next) => {
+  fn(req, res, next).catch(next);
+};
 class AppError extends Error {
   constructor(message, statusCode) {
     super(message);

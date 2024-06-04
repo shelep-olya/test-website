@@ -8,15 +8,14 @@ const sendTest = (data, statusCode, res, redirectUrl) => {
 };
 
 exports.addTest = catchAsync(async (req, res, next) => {
-  const testData = {
-    question: req.body.question,
-    answers: req.body.answers,
-    author: req.body.author,
+  const { question, answers, author } = req.body;
+  const newTest = await Test.create({
+    question,
+    answers,
+    author,
     postedAt: Date.now(),
-  };
-
-  const newTest = await Test.create(testData);
-  sendTest(newTest, 201, res, "test");
+  });
+  res.status(201).redirect("/home");
 });
 
 exports.deleteTest = catchAsync(async (req, res, next) => {
@@ -35,4 +34,9 @@ exports.updateTest = catchAsync(async (req, res, next) => {
     }
   );
   sendTest(updatedTest, 200, res, "test");
+});
+
+exports.getTest = catchAsync(async (req, res, next) => {
+  const test = await Test.findById(req.body.id);
+  sendTest(test, 200, res, "test");
 });
