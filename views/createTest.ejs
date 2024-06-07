@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/style.css">
     <title>Create Test</title>
 </head>
-<body>
-    <div>
+<body class="main">
+    <%- include('./authPartials/header.ejs') %>
+    <div class="wrapper">
         <form action="/submit-test" method="post" class="form-container">
             <div class="wrap">
                 <div class="tests-wrapper">
@@ -37,5 +39,6 @@
             </div>
         </form>
     </div>
+    <%- include('./partials/footer.ejs') %>
 </body>
 </html>
