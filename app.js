@@ -37,6 +37,12 @@ app.get("/", (req, res) => {
 app.get("/main.ejs", (req, res) => {
   res.render("main");
 });
+app.get("/me.ejs", (req, res) => {
+  res.render("me");
+});
+app.get("/moreTests.ejs", (req, res) => {
+  res.render("moreTests");
+});
 app.get("/about.ejs", (req, res) => {
   res.render("about");
 });
