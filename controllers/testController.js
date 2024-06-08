@@ -1,4 +1,3 @@
-const express = require("express");
 const Test = require("./../models/test-model");
 const catchAsync = require("./../utils/catch-async");
 const AppError = require("./../utils/app-error");

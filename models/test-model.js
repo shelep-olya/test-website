@@ -14,6 +14,10 @@ const testSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  result: {
+    type: String,
+    required: [true, "Please confirm answers"],
+  },
   postedAt: Date,
 });
 const Test = mongoose.model("Test", testSchema);
