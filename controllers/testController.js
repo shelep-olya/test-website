@@ -1,4 +1,4 @@
-const Test = require("./../models/test-model");
+const Test = require("./../models/testModel");
 const catchAsync = require("./../utils/catch-async");
 const AppError = require("./../utils/app-error");
 
@@ -7,10 +7,9 @@ const sendTest = (data, statusCode, res, redirectUrl) => {
 };
 
 exports.addTest = catchAsync(async (req, res, next) => {
-  const { question, answers, author } = req.body;
+  const { questions, author } = req.body;
   const newTest = await Test.create({
-    question,
-    answers,
+    questions,
     author,
     postedAt: Date.now(),
   });

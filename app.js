@@ -7,7 +7,7 @@ const testRouter = require("./routes/testRoutes");
 
 const app = express();
 
-// Налаштування шаблонів EJS
+// Nалаштування шаблонів EJS
 app.set("view engine", "ejs");
 
 // Парсери для даних
@@ -65,9 +65,14 @@ app.get("/home.ejs", (req, res) => {
   res.render("home");
 });
 app.get("/createTest.ejs", (req, res) => {
-  res.render("createTest");
+  res.render("createTest", { numQuestions: 0 }); // Ensure numQuestions is passed
 });
-// Форма
+
+app.post("/create-test-step1", (req, res) => {
+  const numQuestions = req.body.numQuestions;
+  res.render("createTest", { numQuestions: numQuestions });
+});
+
 app.post("/submit", (req, res) => postResFunc(req, res));
 
 module.exports = app;
