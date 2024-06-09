@@ -4,7 +4,9 @@ const { postResFunc } = require("./utils/test-functionallity");
 const bodyParser = require("body-parser");
 const userRouter = require("./routes/userRoutes");
 const testRouter = require("./routes/testRoutes");
-
+const viewsRouter = require("./routes/viewsRoutes");
+//ІНДЕКС ВІДПОВІДАЄ ЗА ШАБЛОН ЯКИЙ Я ТАК І НЕ ЗРОБИЛА. ЯКЩО ЗАХОЧЕШ ПОВЕРНУТИ НАЗАД
+//ІНДЕКС УДАЛИ І ЗРОБИ МЕЙН ЧЕРЕЗ ПОВНОЦІННИЙ HTML + CHSNGE APP.GET
 const app = express();
 
 // Nалаштування шаблонів EJS
@@ -28,30 +30,31 @@ app.use("/", limiter);
 
 // Маршрути
 app.use("/auth", userRouter);
-app.use("/", testRouter);
+app.use("/test", testRouter);
+app.use("/", viewsRouter);
 
 // Головна сторінка
-app.get("/", (req, res) => {
-  res.render("main");
-});
-app.get("/main.ejs", (req, res) => {
-  res.render("main");
-});
-app.get("/me.ejs", (req, res) => {
-  res.render("me");
-});
-app.get("/moreTests.ejs", (req, res) => {
-  res.render("moreTests");
-});
-app.get("/about.ejs", (req, res) => {
-  res.render("about");
-});
-app.get("/results.ejs", (req, res) => {
-  res.render("results");
-});
-app.get("/test.ejs", (req, res) => {
-  res.render("test");
-});
+// app.get("/" || "/main", (req, res) => {
+//   const locals = "home";
+
+//   res.render("main", { locals });
+// });
+
+// app.get("/me.ejs", (req, res) => {
+//   res.render("me");
+// });
+// app.get("/moreTests.ejs", (req, res) => {
+//   res.render("moreTests");
+// });
+// app.get("/about.ejs", (req, res) => {
+//   res.render("about");
+// });
+// app.get("/results.ejs", (req, res) => {
+//   res.render("results");
+// });
+// app.get("/test.ejs", (req, res) => {
+//   res.render("test");
+// });
 app.get("/login.ejs", (req, res) => {
   res.render("login");
 });

@@ -1,25 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles/style.css">
-    <link rel="icon" href="/images/icon.png">
-    <title>home</title>
-</head>
-<body class="main">
-    <%- include('./partials/header.ejs') %>
-    <div class="wrapper">
+<%- include('./partials/header.ejs') %>
+  <div class="wrapper">
     <p>здавалося б все -- можна вішатись,</p>
     <h1>але</h1>
-</div>
-    <a href="/test.ejs" class="test-link">пройдіть короткий тест на тип особистості за Шелеп</a>
+  </div>
+    <a href="/test" class="test-link">пройдіть короткий тест на тип особистості за Шелеп</a>
     <div class="image">
         <img  id="cute-image" src="/images/cute5.jpg" alt="cute photo" width="400px">
-
-<script>
+  
+  <script>
     let imageIndex = 0;
-let images = [
+  let images = [
   "cute-img.jpg",
   "cute.jpg",
   "cute1.jpg",
@@ -27,26 +17,23 @@ let images = [
   "cute3.jpg",
   "cute5.jpg",
   "cute6.jpg",
-];
-
-function getRandomImage() {
+  ];
+  
+  function getRandomImage() {
   const filteredImages = images.filter((image) => image.startsWith("c"));
   const randomIndex = Math.floor(Math.random() * filteredImages.length);
   return filteredImages[randomIndex];
-}
-function changePhoto() {
+  }
+  function changePhoto() {
   const cuteImage = document.getElementById("cute-image");
   const newImageUrl = `/images/${getRandomImage()}`;
   cuteImage.src = newImageUrl;
-}
-
-window.onload = () => {
+  }
+  
+  window.onload = () => {
   changePhoto();
   setInterval(changePhoto, 1000 * 60 * 10);
-};
-
-</script>
-    </div>
-    <%- include('./partials/footer.ejs') %>
-</body>
-</html>
+  };
+  
+  </script>
+ <%- include('./partials/footer.ejs') %>
