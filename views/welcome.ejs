@@ -1,51 +1,41 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles/style.css">
-    <link rel="icon" href="/images/icon.png">
-    <title>home</title>
-</head>
 <body class="main">
-    <%- include('./partials/header.ejs') %>
-    <div class="wrapper">
-    <p>Welcome</p>
-    <h1><%= user.name %>!</h1>
+  <%- include('./partials/header.ejs') %>
+  <div class="wrapper">
+  <p>Welcome</p>
+  <h1><%= user.name %>!</h1>
 </div>
-   
-    <div class="image">
-        <img  id="cute-image" src="/images/cute5.jpg" alt="cute photo" width="400px">
+ 
+  <div class="image">
+      <img  id="cute-image" src="/images/cute5.jpg" alt="cute photo" width="400px">
 
 <script>
-    let imageIndex = 0;
+  let imageIndex = 0;
 let images = [
-  "cute-img.jpg",
-  "cute.jpg",
-  "cute1.jpg",
-  "cute2.jpg",
-  "cute3.jpg",
-  "cute5.jpg",
-  "cute6.jpg",
+"cute-img.jpg",
+"cute.jpg",
+"cute1.jpg",
+"cute2.jpg",
+"cute3.jpg",
+"cute5.jpg",
+"cute6.jpg",
 ];
 
 function getRandomImage() {
-  const filteredImages = images.filter((image) => image.startsWith("c"));
-  const randomIndex = Math.floor(Math.random() * filteredImages.length);
-  return filteredImages[randomIndex];
+const filteredImages = images.filter((image) => image.startsWith("c"));
+const randomIndex = Math.floor(Math.random() * filteredImages.length);
+return filteredImages[randomIndex];
 }
 function changePhoto() {
-  const cuteImage = document.getElementById("cute-image");
-  const newImageUrl = `/images/${getRandomImage()}`;
-  cuteImage.src = newImageUrl;
+const cuteImage = document.getElementById("cute-image");
+const newImageUrl = `/images/${getRandomImage()}`;
+cuteImage.src = newImageUrl;
 }
 
 window.onload = () => {
-  changePhoto();
-  setInterval(changePhoto, 1000 * 60 * 10);
+changePhoto();
+setInterval(changePhoto, 1000 * 60 * 10);
 };
 
 </script>
-    </div>
-    <%- include('./../partials/footer.ejs') %>
+  </div>
 </body>
-</html>

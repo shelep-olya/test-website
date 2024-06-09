@@ -1,44 +1,88 @@
 const express = require("express");
+const { postResFunc } = require("../utils/test-functionallity");
 const router = express.Router();
 
-router.get("/" || "/main", (req, res) => {
-  const locals = "home";
+router.get("/", (req, res) => {
+  const locals = {
+    title: "home",
+  };
   res.render("main.ejs", { locals });
 });
-// app.get("/me.ejs", (req, res) => {
-//     res.render("me");
-//   });
-//   app.get("/moreTests.ejs", (req, res) => {
-//     res.render("moreTests");
-//   });
+
 router.get("/me", (req, res) => {
-  const locals = "My account";
+  const locals = {
+    title: "my account",
+  };
   res.render("me.ejs", { locals });
 });
 
 router.get("/moreTests", (req, res) => {
-  const locals = "More tests";
+  const locals = {
+    title: "more tests",
+  };
   res.render("moreTests.ejs", { locals });
 });
-// app.get("/about.ejs", (req, res) => {
-//     res.render("about");
-//   });
+
 router.get("/about", (req, res) => {
-  const locals = "about";
+  const locals = {
+    title: "about",
+  };
   res.render("about.ejs", { locals });
 });
-//   app.get("/results.ejs", (req, res) => {
-//     res.render("results");
-//   });
+
 router.get("/results", (req, res) => {
-  const locals = "results";
+  const locals = {
+    title: "results",
+  };
   res.render("results.ejs", { locals });
 });
-//   app.get("/test.ejs", (req, res) => {
-//     res.render("test");
-//   });
+
 router.get("/test", (req, res) => {
-  const locals = "test";
+  const locals = {
+    title: "test",
+  };
   res.render("test.ejs", { locals });
 });
+
+router.get("/login", (req, res) => {
+  const locals = {
+    title: "log in",
+  };
+  res.render("login.ejs", { locals });
+});
+router.get("/signup", (req, res) => {
+  const locals = {
+    title: "sign up",
+  };
+  res.render("signup.ejs", { locals });
+});
+router.get("/welcome", (req, res) => {
+  const locals = {
+    title: "welcome",
+  };
+  res.render("/welcome.ejs", { locals });
+});
+router.get("/home", (req, res) => {
+  const locals = {
+    title: "home",
+  };
+  res.render("home.ejs", { locals });
+});
+
+router.get("/createTest", (req, res) => {
+  const locals = {
+    title: "create test",
+  };
+  res.render("createTest.ejs", { locals });
+});
+
+router.post("/create-test-step1", (req, res) => {
+  const locals = {
+    title: "create test",
+    numQuestions: req.body.numQuestions,
+  };
+  res.render("createTest.ejs", { locals });
+});
+router.post("/submit", (req, res) => postResFunc(req, res));
+
 module.exports = router;

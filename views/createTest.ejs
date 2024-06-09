@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Test</title>
+    <title><%= locals.title %></title>
     <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body class="main">
@@ -19,7 +19,7 @@
     <% if (numQuestions > 0) { %>
     <form action="/submit-test" method="post" class="form-container">
         <div class="wrap">
-            <% for(let i = 0; i < numQuestions; i++) { %>
+            <% for(let i = 0; i < locals.numQuestions; i++) { %>
                 <div class="tests-wrapper">
                     <h2 class="question">Question <%= i + 1 %></h2>
                     <label for="question<%= i %>">Question:</label>

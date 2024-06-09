@@ -55,27 +55,27 @@ app.use("/", viewsRouter);
 // app.get("/test.ejs", (req, res) => {
 //   res.render("test");
 // });
-app.get("/login.ejs", (req, res) => {
-  res.render("login");
-});
-app.get("/signup.ejs", (req, res) => {
-  res.render("signup");
-});
-app.get("/welcome.ejs", (req, res) => {
-  res.render("welcome");
-});
-app.get("/home.ejs", (req, res) => {
-  res.render("home");
-});
-app.get("/createTest.ejs", (req, res) => {
-  res.render("createTest", { numQuestions: 0 }); // Ensure numQuestions is passed
-});
+// app.get("/login.ejs", (req, res) => {
+//   res.render("login");
+// });
+// app.get("/signup.ejs", (req, res) => {
+//   res.render("signup");
+// });
+// app.get("/welcome.ejs", (req, res) => {
+//   res.render("welcome");
+// });
+// app.get("/home.ejs", (req, res) => {
+//   res.render("home");
+// });
+// app.get("/createTest.ejs", (req, res) => {
+//   res.render("createTest", { numQuestions: 0 }); // Ensure numQuestions is passed
+// });
 
-app.post("/create-test-step1", (req, res) => {
-  const numQuestions = req.body.numQuestions;
-  res.render("createTest", { numQuestions: numQuestions });
-});
+// app.post("/create-test-step1", (req, res) => {
+//   const numQuestions = req.body.numQuestions;
+//   res.render("createTest", { numQuestions: numQuestions });
+// });
 
-app.post("/submit", (req, res) => postResFunc(req, res));
+// app.post("/submit", (req, res) => postResFunc(req, res));
 
 module.exports = app;
