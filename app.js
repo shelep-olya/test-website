@@ -6,7 +6,7 @@ const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const userRouter = require("./routes/userRoutes");
-const authRouter = require("./routes/authRoutes");
+// const authRouter = require("./routes/authRoutes");
 const testRouter = require("./routes/testRoutes");
 const viewsRouter = require("./routes/viewsRoutes");
 const AppError = require("./utils/app-error");
@@ -18,11 +18,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static("public"));
 app.use(expressLayout);
-app.set("layout", "./layouts/index");
-app.set("layout", "./layouts/authIndex");
+const isAuth = (req) => {
+  return req.query.auth === "true";
+};
+app.use((req, res, next) => {
+  res.locals.layout = isAuth(req) ? "./layouts/authIndex" : "./layouts/index";
+  next();
+});
+// app.set("layout", "./layouts/index");
+// app.set("layout", "./layouts/authIndex");
 app.set("view engine", "ejs");
 app.use("/auth", userRouter);
-app.use("/auth", authRouter);
+// app.use("/auth", authRouter);
 app.use("/test", testRouter);
 app.use("/", viewsRouter);
 

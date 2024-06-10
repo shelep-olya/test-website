@@ -4,23 +4,23 @@ const jwt = require("jsonwebtoken");
 const AppError = require("./../utils/app-error");
 const User = require("./../models/userModel");
 const bcrypt = require("bcrypt");
+const { createAndSendToken } = require("./../utils/auth");
+// const signToken = (id) => {
+//   return jwt.sign({ id }, process.env.JWT_SECRET, {
+//     expiresIn: process.env.JWT_EXPIRES_IN,
+//   });
+// };
 
-const signToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
-  });
-};
-
-const createAndSendToken = (user, statusCode, res, redirectUrl) => {
-  const token = signToken(user._id);
-  res.cookie("jwt", token, {
-    expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-    ),
-    httpOnly: true,
-  });
-  res.status(statusCode).render(redirectUrl, { user });
-};
+// const createAndSendToken = (user, statusCode, res, redirectUrl, locals) => {
+//   const token = signToken(user._id);
+//   res.cookie("jwt", token, {
+//     expires: new Date(
+//       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+//     ),
+//     httpOnly: true,
+//   });
+//   res.status(statusCode).render(redirectUrl, { user, ...locals });
+// };
 exports.signup = catchAsync(async (req, res, next) => {
   const data = {
     name: req.body.username,
@@ -28,9 +28,12 @@ exports.signup = catchAsync(async (req, res, next) => {
     passwordConfirm: req.body.passwordConfirm,
     email: req.body.email,
   };
-  console.log(data);
   const newUser = await User.create(data);
-  createAndSendToken(newUser, 201, res, "/welcome");
+  const locals = {
+    title: "welcome",
+    isAuth: true,
+  };
+  createAndSendToken(newUser, 201, res, "welcome.ejs", { locals });
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -45,7 +48,11 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError("Incorrect password or email.", 401));
   }
-  createAndSendToken(user, 200, res, "home");
+  const locals = {
+    title: "home",
+    isAuth: true,
+  };
+  createAndSendToken(user, 200, res, "home.ejs", { locals });
 });
 exports.protect = catchAsync(async (req, res, next) => {
   let token;
