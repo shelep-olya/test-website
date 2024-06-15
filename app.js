@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const expressLayout = require("express-ejs-layouts");
 const rateLimit = require("express-rate-limit");
@@ -6,30 +7,25 @@ const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const userRouter = require("./routes/userRoutes");
-// const authRouter = require("./routes/authRoutes");
 const testRouter = require("./routes/testRoutes");
 const viewsRouter = require("./routes/viewsRoutes");
 const AppError = require("./utils/app-error");
+const { publicDecrypt } = require("crypto");
 
 const app = express();
+app.set("view engine", "ejs");
+app.set("layout", "./layouts/index");
+// app.set("layout", "./layouts/authIndex");
+
 app.use(helmet());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
+
 app.use(expressLayout);
-const isAuth = (req) => {
-  return req.query.auth === "true";
-};
-app.use((req, res, next) => {
-  res.locals.layout = isAuth(req) ? "./layouts/authIndex" : "./layouts/index";
-  next();
-});
-// app.set("layout", "./layouts/index");
-// app.set("layout", "./layouts/authIndex");
-app.set("view engine", "ejs");
+
 app.use("/auth", userRouter);
-// app.use("/auth", authRouter);
 app.use("/test", testRouter);
 app.use("/", viewsRouter);
 
