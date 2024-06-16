@@ -8,6 +8,7 @@ router.get("/results", viewsController.getResultsPage);
 router.get("/test", viewsController.getTestPage);
 router.get("/login", viewsController.logIn);
 router.get("/signup", viewsController.signUp);
+router.get("/submit", viewsController.submitBTN);
 // router.get("/login", (req, res) => {
 
 //   const locals = {

@@ -5,6 +5,7 @@ const AppError = require("./../utils/app-error");
 const User = require("./../models/userModel");
 const bcrypt = require("bcrypt");
 const { createAndSendToken } = require("./../utils/auth");
+const { promisify } = require("util");
 exports.signup = catchAsync(async (req, res, next) => {
   const data = {
     name: req.body.username,
@@ -68,3 +69,31 @@ exports.protect = catchAsync(async (req, res, next) => {
   req.user = newUser;
   next();
 });
+exports.logout = (req, res) => {
+  res.cookie("jwt", "loggedout", {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+  res.status(200).json({ status: "success" });
+};
+exports.isLoggedIn = async (req, res) => {
+  if (req.cookies.jwt) {
+    try {
+      const decoded = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRET
+      );
+      const currentUser = await User.findById(decoded.id);
+      if (!currentUser) {
+        return next();
+      }
+      if (currentUser.changedPasswordAfter(decoded.iat)) {
+        return next();
+      }
+      return next();
+    } catch (err) {
+      return next();
+    }
+  }
+  return next();
+};
