@@ -8,6 +8,7 @@ const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const userRouter = require("./routes/userRoutes");
 const testRouter = require("./routes/testRoutes");
+const authRouter = require("./routes/authRoutes");
 const viewsRouter = require("./routes/viewsRoutes");
 const AppError = require("./utils/app-error");
 const { publicDecrypt } = require("crypto");
@@ -26,7 +27,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(expressLayout);
 
 app.use("/auth", userRouter);
-app.use("/test", testRouter);
+app.use("/", testRouter);
+app.use("/", authRouter);
 app.use("/", viewsRouter);
 
 const limiter = rateLimit({
