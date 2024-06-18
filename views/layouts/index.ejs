@@ -7,7 +7,13 @@
     <title><%= locals.title %></title>
 </head>
 <body class="main">
-    <%- include('./../partials/header') %>
+  
+    <% if (user) { %>
+        <%- include('./../authPartials/header') %>
+    <% } else { %>
+        <%- include('./../partials/header') %>
+    <% } %>
+   
     <div>
         
         <main><%- body %></main>

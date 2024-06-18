@@ -13,7 +13,6 @@ body {
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
   display: flex;
-  height: 100vh;
   flex-direction: column;
 }
 
@@ -76,9 +75,11 @@ button:hover {
 .content {
   flex: 1;
 }
+.a-link {
+  align-items: center;
+}
 .test-link,
 .test {
-  cursor: url("./../images/8673225_ic_fluent_cursor_filled_icon.png"), auto;
   padding-top: 30px;
   font-size: 24px;
   color: #b7c2b7;
@@ -140,6 +141,7 @@ h2 {
   padding-bottom: 20px;
 }
 .main-content {
+  height: 100%;
   flex-grow: 1;
   display: flex;
   justify-content: center;
