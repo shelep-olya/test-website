@@ -3,11 +3,11 @@ const express = require("express");
 const router = express.Router();
 router
   .route("/auth/test/")
-  .get(testController.getQuestionForm)
+  // .get(testController.getQuestionForm)
   .post(testController.addTest);
 
-router.get("/addTest", testController.getQuestionForm);
-router.get("/addTestQuestions", testController.getAddTestForm);
+// router.post("/addTest", testController.addTest);
+// router.get("/addTestQuestions", testController.getAddTestForm);
 router.post("/submit-test", testController.addTest);
 
 module.exports = router;

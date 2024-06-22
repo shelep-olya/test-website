@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const User = require("./userModel");
-const testBlockSchema = require("./testBlock");
+const testBlockSchema = require("./testBlockSchema");
 
 const testSchema = new mongoose.Schema({
   numOfQuestions: {
