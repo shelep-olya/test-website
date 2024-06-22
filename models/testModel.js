@@ -11,6 +11,7 @@ const testSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  results: [String],
 });
 const Test = mongoose.model("Test", testSchema);
 

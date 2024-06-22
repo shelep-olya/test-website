@@ -1,4 +1,3 @@
-const { postResFunc } = require("../utils/test-functionallity");
 exports.getHomePage = (req, res) => {
   res.render("main", {
     title: "home",
@@ -29,4 +28,3 @@ exports.logIn = (req, res) => {
 exports.signUp = (req, res) => {
   res.render("signup", { title: "sign up", user: false });
 };
-exports.submitBTN = (req, res) => postResFunc(req, res);

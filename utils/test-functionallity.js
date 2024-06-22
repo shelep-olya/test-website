@@ -11,7 +11,7 @@ const postResFunc = (req, res) => {
 
   let resMessage = messages[n];
 
-  res.render("results", { resMessage });
+  res.render("results", { resMessage, user: false });
 };
 
 module.exports = { postResFunc };

@@ -1,6 +1,5 @@
-const Test = require("./../models/testModel");
+const Test = require("./../models/finalTestModel");
 const catchAsync = require("./../utils/catch-async");
-const AppError = require("./../utils/app-error");
 
 const sendTest = (data, statusCode, res, redirectUrl) => {
   res.status(statusCode).render(redirectUrl, { data });
@@ -11,7 +10,7 @@ exports.getAddTestForm = (req, res, next) => {
   res.render("addTest", {
     title: "add test",
     numQuestions,
-    author,
+    author: req.body.author,
     user: true,
   });
 };
@@ -22,10 +21,11 @@ exports.getQuestionForm = (req, res) => {
   });
 };
 exports.addTest = catchAsync(async (req, res, next) => {
-  const { questions, author } = req.body;
+  const { questions, author, results } = req.body;
   const newTest = await Test.create({
     questions,
-    author,
+    author: req.body.author,
+    results,
     user: true,
     postedAt: Date.now(),
   });
@@ -44,7 +44,7 @@ exports.updateTest = catchAsync(async (req, res, next) => {
     updatedData.id,
     updatedData,
     {
-      new: sendTest(updatedTest, 200, res, "test"),
+      new: true,
     }
   );
   sendTest(updatedTest, 200, res, "test");
