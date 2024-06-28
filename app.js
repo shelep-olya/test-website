@@ -11,6 +11,8 @@ const testRouter = require("./routes/testRoutes");
 const authRouter = require("./routes/authRoutes");
 const viewsRouter = require("./routes/viewsRoutes");
 const AppError = require("./utils/app-error");
+const session = require("express-session");
+const MongoDBSession = require("connect-mongodb-session")(session);
 const { publicDecrypt } = require("crypto");
 
 const app = express();
@@ -25,12 +27,23 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(expressLayout);
-
+const store = new MongoDBSession({
+  uri: process.env.DATABASE,
+  collection: "sessions",
+});
+app.use(
+  session({
+    secret: process.env.JWT_SECRET,
+    saveUninitialized: false,
+    resave: false,
+    store: store,
+  })
+);
 app.use("/auth", userRouter);
 app.use("/", testRouter);
 app.use("/", authRouter);
 app.use("/", viewsRouter);
-
+app.use(express.urlencoded({ extended: true }));
 const limiter = rateLimit({
   max: 1000,
   windowMs: 60 * 60 * 1000,

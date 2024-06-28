@@ -10,12 +10,6 @@ exports.getMoreTests = (req, res) => {
     user: true,
   });
 };
-exports.getQuestionForm = (req, res) => {
-  res.render("questionForm", {
-    title: "create your own test",
-    user: true,
-  });
-};
 exports.getWelcomePage = (req, res) => {
   res.render("welcome", {
     title: welcome,

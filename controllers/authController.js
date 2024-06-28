@@ -6,6 +6,24 @@ const User = require("./../models/userModel");
 const bcrypt = require("bcrypt");
 const { createAndSendToken } = require("./../utils/auth");
 const { promisify } = require("util");
+// exports.signup = catchAsync(async (req, res, next) => {
+//   const email = req.body.email;
+
+//   const data = {
+//     name: req.body.username,
+//     password: req.body.password,
+//     passwordConfirm: req.body.passwordConfirm,
+//     email: email,
+//   };
+//   console.log(data);
+//   let user = await User.findOne({ email });
+//   if (user) return res.redirect("/");
+
+//   user = new User({ data });
+//   await user.save();
+//   res.redirect("/login");
+// });
+
 exports.signup = catchAsync(async (req, res, next) => {
   const data = {
     name: req.body.username,
@@ -28,7 +46,6 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!email || !password) {
     return next(new AppError("Please provide password & email.", 400));
   }
-  console.log(req.body);
   const user = await User.findOne({ email }).select("+password");
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError("Incorrect password or email.", 401));
