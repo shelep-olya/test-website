@@ -28,12 +28,6 @@ exports.getAboutPage = (req, res) => {
     user: false,
   });
 };
-// exports.getTestPage = (req, res) => {
-//   res.render("test", {
-//     title: "test",
-//     user: false,
-//   });
-// };
 exports.getResultsPage = (req, res) => {
   res.render("results", {
     title: "your results",

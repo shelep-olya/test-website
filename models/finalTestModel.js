@@ -3,7 +3,7 @@ const User = require("./userModel");
 const testBlockSchema = require("./testBlockSchema");
 
 const testSchema = new mongoose.Schema({
-  numOfQuestions: {
+  numberOfQuestions: {
     type: Number,
     required: [true, "Please enter number of questions."],
     validate: {
@@ -18,10 +18,10 @@ const testSchema = new mongoose.Schema({
     type: [testBlockSchema],
     validate: {
       validator: function (v) {
-        return v.length === this.numOfQuestions;
+        return v.length === this.numberOfQuestions;
       },
       message: (props) =>
-        `Number of test blocks (${props.value.length}) does not match the number of questions (${this.numOfQuestions}).`,
+        `Number of test blocks (${props.value.length}) does not match the number of questions (${this.numberOfQuestions}).`,
     },
   },
   author: {

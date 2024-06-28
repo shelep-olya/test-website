@@ -7,6 +7,4 @@ router.get("/me", authViewsController.getMe);
 router.get("/moreTests", authViewsController.getMoreTests);
 router.get("/welcome", authViewsController.getWelcomePage);
 router.get("/home", authViewsController.getHomePage);
-
-// router.get("/createTest", authViewsController.createTest);
 module.exports = router;

@@ -6,7 +6,7 @@ router
   // .get(testController.getQuestionForm)
   .post(testController.addTest);
 
-// router.post("/addTest", testController.addTest);
+router.post("/addTest", testController.addTest);
 // router.get("/addTestQuestions", testController.getAddTestForm);
 router.post("/submit-test", testController.addTest);
 
