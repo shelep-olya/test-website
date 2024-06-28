@@ -64,5 +64,14 @@ app.use(xss());
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
+app.use(express.urlencoded({ extended: true }));
+app.post("/submitTest", (req, res) => {
+  const formData = req.body;
+  // Process form data and save results
+  // Example: console.log(formData);
+
+  // Redirect or render a response
+  res.redirect("/testSubmitted");
+});
 
 module.exports = app;

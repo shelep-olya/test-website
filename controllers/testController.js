@@ -1,6 +1,7 @@
 const Test = require("./../models/finalTestModel");
 const User = require("./../models/userModel");
 const catchAsync = require("./../utils/catch-async");
+const handlerFactory = require("./handlerFactory");
 
 const sendTest = (data, statusCode, res, redirectUrl) => {
   res.status(statusCode).render(redirectUrl, { data });
@@ -58,7 +59,4 @@ exports.updateTest = catchAsync(async (req, res, next) => {
   sendTest(updatedTest, 200, res, "test");
 });
 
-exports.getTest = catchAsync(async (req, res, next) => {
-  const test = await Test.findById(req.body.id);
-  sendTest(test, 200, res, "test");
-});
+exports.getTest = handlerFactory.getOne(Test);
