@@ -6,23 +6,23 @@ const User = require("./../models/userModel");
 const bcrypt = require("bcrypt");
 const { createAndSendToken } = require("./../utils/auth");
 const { promisify } = require("util");
-// exports.signup = catchAsync(async (req, res, next) => {
-//   const email = req.body.email;
+// // exports.signup = catchAsync(async (req, res, next) => {
+// //   const email = req.body.email;
 
-//   const data = {
-//     name: req.body.username,
-//     password: req.body.password,
-//     passwordConfirm: req.body.passwordConfirm,
-//     email: email,
-//   };
-//   console.log(data);
-//   let user = await User.findOne({ email });
-//   if (user) return res.redirect("/");
+// //   const data = {
+// //     name: req.body.username,
+// //     password: req.body.password,
+// //     passwordConfirm: req.body.passwordConfirm,
+// //     email: email,
+// //   };
+// //   console.log(data);
+// //   let user = await User.findOne({ email });
+// //   if (user) return res.redirect("/");
 
-//   user = new User({ data });
-//   await user.save();
-//   res.redirect("/login");
-// });
+// //   user = new User({ data });
+// //   await user.save();
+// //   res.redirect("/login");
+// // });
 
 exports.signup = catchAsync(async (req, res, next) => {
   const data = {
@@ -36,7 +36,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     title: "welcome",
     isAuth: true,
   };
-  createAndSendToken(newUser, 201, res, "welcome.ejs", { locals });
+  createAndSendToken(newUser, 201, res, "login.ejs", { locals });
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -46,7 +46,7 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!email || !password) {
     return next(new AppError("Please provide password & email.", 400));
   }
-  const user = await User.findOne({ email }).select("+password");
+  const user = await User.findOne({ email });
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError("Incorrect password or email.", 401));
   }
@@ -56,62 +56,55 @@ exports.login = catchAsync(async (req, res, next) => {
   };
   createAndSendToken(user, 200, res, "home.ejs", { locals });
 });
-// exports.protect = catchAsync(async (req, res, next) => {
-//   let token;
-//   if (
-//     req.headers.authorization &&
-//     req.headers.authorization.startsWith("Bearer")
-//   ) {
-//     token = req.headers.authorization.split(" ")[1];
-//   }
-//   if (!token) {
-//     return next(
-//       new AppError("You are not logged in. Please log in to get access.", 401)
-//     );
-//   }
-//   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-
-//   const newUser = await User.findById(decoded.id);
-//   if (!newUser) {
-//     return next(new AppError("The user no longer exists.", 401));
-//   }
-// });
-// // if (newUser.passwordChangedAt(decoded.iat)) {
-// //   return next(
-// //     new AppError(
-// //       "User has changed password recently. Please login again.",
-// //       401
-// //     )
-// //   );
+// // exports.protect = catchAsync(async (req, res, next) => {
+// //   let token;
+// //   if (
+// //     req.headers.authorization &&
+// //     req.headers.authorization.startsWith("Bearer")
+// //   ) {
+// //     token = req.headers.authorization.split(" ")[1];
 // //   }
-// //   req.user = newUser;
-// //   next();
+// //   if (!token) {
+// //     return next(
+// //       new AppError("You are not logged in. Please log in to get access.", 401)
+// //     );
+// //   }
+// //   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+
+// //   const newUser = await User.findById(decoded.id);
+// //   if (!newUser) {
+// //     return next(new AppError("The user no longer exists.", 401));
+// //   }
 // // });
+// // // if (newUser.passwordChangedAt(decoded.iat)) {
+// // //   return next(
+// // //     new AppError(
+// // //       "User has changed password recently. Please login again.",
+// // //       401
+// // //     )
+// // //   );
+// // //   }
+// // //   req.user = newUser;
+// // //   next();
+// // // });
 exports.logout = (req, res) => {
-  res.cookie("jwt", "loggedout", {
-    expires: new Date(Date.now() + 10 * 1000),
-    httpOnly: true,
-  });
-  res.status(200).json({ status: "success" });
+  res.clearCookie("jwt");
+  res.redirect("/");
 };
-exports.isLoggedIn = async (req, res) => {
+
+exports.isLoggedIn = catchAsync(async (req, res, next) => {
   if (req.cookies.jwt) {
-    try {
-      const decoded = await promisify(jwt.verify)(
-        req.cookies.jwt,
-        process.env.JWT_SECRET
-      );
-      const currentUser = await User.findById(decoded.id);
-      if (!currentUser) {
-        return next();
-      }
-      if (currentUser.changedPasswordAfter(decoded.iat)) {
-        return next();
-      }
-      return next();
-    } catch (err) {
+    const decoded = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRET
+    );
+    const currentUser = await User.findById(decoded.id);
+    if (!currentUser) {
       return next();
     }
+    if (currentUser.changedPasswordAfter(decoded.iat)) {
+      return next();
+    }
+    return next();
   }
-  return next();
-};
+});
