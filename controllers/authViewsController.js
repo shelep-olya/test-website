@@ -21,10 +21,10 @@ exports.getWelcomePage = (req, res) => {
   });
 };
 exports.getHomePage = (req, res) => {
-  const username = req.user.name;
+  const user = req.user;
   res.render("home", {
     title: "home",
     user: true,
-    username,
+    data: { user },
   });
 };

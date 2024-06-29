@@ -6,7 +6,7 @@
     <title>Test Page</title>
 </head>
 <body>
-    <form action="/submitTest/<%= id %>" method="POST">
+    <form action="/submitTest/" method="POST">
         <h2> by <%= newTest.author %></h2>
         <% for (let i = 0; i < newTest.numberOfQuestions; i++) { %>
             <div class="test-wrapper">
