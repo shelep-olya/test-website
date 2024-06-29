@@ -1,3 +1,17 @@
-<div class="wrapper">
-    <h1>My Account</h1>
+
+<div class="container">
+    <div class="profile-box">
+        <img src="/images/menu.png" class="menu-photo" alt="menu-photo">
+        <img src="/images/settings.png" class="settings-photo" alt="settings-photo">
+        <img src="/images/cute5.jpg" alt="profile-photo" class="profile-photo">
+        <h3>
+            <%= data.user.name %>
+        </h3>
+        <div>
+            <p> Email: <%= data.user.email %></p>
+            <p> <a href="/logout">Log out:</a></p>
+            <p> <a href="/login">Change account:</a></p>
+            <p><a href="/login">Delete account:</a></p>
+        </div>
+    </div>
 </div>

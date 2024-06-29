@@ -56,6 +56,27 @@ exports.login = catchAsync(async (req, res, next) => {
   };
   createAndSendToken(user, 200, res, "home.ejs", { locals });
 });
+
+exports.protect = catchAsync(async (req, res, next) => {
+  let token;
+  if (req.cookies.jwt) {
+    token = req.cookies.jwt;
+  }
+
+  if (!token) {
+    return res.status(401).send("Unauthorized");
+  }
+
+  const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+
+  const user = await User.findById(decoded.id);
+  if (!user) {
+    return res.status(401).send("User not found");
+  }
+
+  req.user = user;
+  next();
+});
 // // exports.protect = catchAsync(async (req, res, next) => {
 // //   let token;
 // //   if (

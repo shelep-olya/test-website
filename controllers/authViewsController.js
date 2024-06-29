@@ -1,7 +1,11 @@
+const User = require("./../models/userModel");
+
 exports.getMe = (req, res) => {
+  const user = req.user;
   res.render("me", {
     title: "my account",
     user: true,
+    data: { user },
   });
 };
 exports.getMoreTests = (req, res) => {
@@ -17,8 +21,10 @@ exports.getWelcomePage = (req, res) => {
   });
 };
 exports.getHomePage = (req, res) => {
+  const username = req.user.name;
   res.render("home", {
     title: "home",
     user: true,
+    username,
   });
 };

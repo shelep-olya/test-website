@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
+const cookieParser = require("cookie-parser");
 const userRouter = require("./routes/userRoutes");
 const testRouter = require("./routes/testRoutes");
 const authRouter = require("./routes/authRoutes");
@@ -18,7 +19,7 @@ const { publicDecrypt } = require("crypto");
 const app = express();
 app.set("view engine", "ejs");
 app.set("layout", "./layouts/index");
-
+app.use(cookieParser());
 app.use(helmet());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
