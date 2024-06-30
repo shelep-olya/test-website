@@ -23,13 +23,10 @@ exports.getTestPage = catchAsync(async (req, res, next) => {
     user: false,
   });
 });
-
 exports.submitTest = catchAsync(async (req, res, next) => {
   const testId = req.params.id;
-  console.log("Test ID:", testId);
   try {
     const test = await Test.findById(testId);
-    console.log("Test:", test);
     if (!test) {
       return res.status(404).json({
         status: "fail",
@@ -45,7 +42,6 @@ exports.submitTest = catchAsync(async (req, res, next) => {
     });
   }
 });
-
 exports.getAboutPage = (req, res) => {
   res.render("about", {
     title: "about",
