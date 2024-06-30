@@ -8,10 +8,16 @@
             <%= data.user.name %>
         </h3>
         <div>
-            <p> Email: <%= data.user.email %></p>
-            <p> <a href="/logout">Log out:</a></p>
-            <p> <a href="/login">Change account:</a></p>
-            <p><a href="/login">Delete account:</a></p>
+            <div class="settings">
+                <p> <a href="/logout">Log out</a></p>
+            </div>
+            <div class="settings">
+                <p> <a href="/login">Change account</a></p>
+            </div>
+            <div class="settings">
+                <p><a href="/login">Delete account</a></p>
+            </div>
+            
         </div>
     </div>
 </div>

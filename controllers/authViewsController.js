@@ -25,6 +25,6 @@ exports.getHomePage = (req, res) => {
   res.render("home", {
     title: "home",
     user: true,
-    data: { user },
+    user,
   });
 };

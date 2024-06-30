@@ -64,13 +64,13 @@ button {
   font-size: 20px;
   margin: 5px;
   transition: all 0.3s ease 0s;
-  background-color: #346b36;
+  background-color: #3a523b;
   border: none;
   cursor: pointer;
   border-radius: 20px;
 }
 button:hover {
-  background-color: #4b824d;
+  background-color: #477548;
 }
 .content {
   flex: 1;
@@ -87,6 +87,10 @@ button:hover {
   padding-bottom: 1px;
   margin-bottom: 1px;
   font-weight: 600;
+}
+.test-link-wrapper {
+  text-align: center;
+  justify-content: center;
 }
 .test-link:hover,
 .test:hover {
@@ -153,6 +157,13 @@ form p {
   margin-top: 10px;
   margin-bottom: 5px;
 }
+.main-h1 {
+  color: #b7c2b7;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bolder;
+  padding-top: 18px;
+}
 
 input[type="radio"] {
   margin-right: 10px;
@@ -179,6 +190,10 @@ input[type="radio"] {
 }
 .answer {
   margin: 10px;
+  font-size: large;
+}
+.answer:hover {
+  color: #3a523b;
 }
 .test-submit {
   align-items: center;
@@ -224,4 +239,18 @@ input[type="radio"] {
   background: #fff;
   padding: 6px;
   margin-top: 40px;
+}
+.settings {
+  text-align: center;
+  justify-content: center;
+  background-color: #b7c2b7;
+  border-radius: 12px;
+  margin-top: 12px;
+  padding: 10px;
+}
+.settings a,
+.settingis p {
+  font-weight: 800;
+  font-size: large;
+  color: #346b36;
 }
