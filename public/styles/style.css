@@ -51,14 +51,14 @@ footer {
 .nav-links li a:hover {
   color: #b7c2b7;
 }
-button {
+/* button {
   padding: 9px 25px;
   background-color: #346b36;
   border: none;
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease 0s;
-}
+} */
 .submit-btn {
   padding: 4px 15px;
   font-size: 20px;
@@ -248,9 +248,9 @@ input[type="radio"] {
   margin-top: 12px;
   padding: 10px;
 }
-.settings a,
-.settingis p {
-  font-weight: 800;
-  font-size: large;
-  color: #346b36;
+.settings button {
+  border-radius: 12px;
+  background-color: #b7c2b7;
+  border: none;
+  cursor: pointer;
 }

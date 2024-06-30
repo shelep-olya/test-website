@@ -108,11 +108,17 @@ exports.protect = catchAsync(async (req, res, next) => {
 // // //   req.user = newUser;
 // // //   next();
 // // // });
+// exports.logout = (req, res) => {
+//   res.clearCookie("jwt");
+//   res.redirect("/");
+// };
 exports.logout = (req, res) => {
-  res.clearCookie("jwt");
-  res.redirect("/");
+  res.cookie("jwt", "loggedout", {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+  res.status(200).redirect("/");
 };
-
 exports.isLoggedIn = catchAsync(async (req, res, next) => {
   if (req.cookies.jwt) {
     const decoded = await promisify(jwt.verify)(
