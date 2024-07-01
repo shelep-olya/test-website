@@ -135,3 +135,7 @@ exports.isLoggedIn = catchAsync(async (req, res, next) => {
     return next();
   }
 });
+exports.deleteMe = catchAsync(async (req, res, next) => {
+  await User.findByIdAndDelete(req.user.id, { active: false });
+  res.status(204).redirect("/");
+});

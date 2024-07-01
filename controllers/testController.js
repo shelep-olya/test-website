@@ -25,7 +25,23 @@ exports.addTest = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteTest = handlerFactory.deleteOne(Test);
-
+exports.getAllTests = catchAsync(async (req, res, next) => {
+  const tests = await Test.find();
+  console.log("Fetched tests:", tests);
+  if (!tests.length) {
+    return res.status(404).render("moreTests", {
+      title: "More tests",
+      tests: [],
+      user: true,
+      message: "No tests found",
+    });
+  }
+  res.status(200).render("moreTests", {
+    title: "More tests",
+    tests,
+    user: true,
+  });
+});
 exports.updateTest = catchAsync(async (req, res, next) => {
   const updatedData = req.body;
   const updatedTest = await Test.findByIdAndUpdate(

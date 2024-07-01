@@ -9,4 +9,5 @@ router.get("/moreTests", authViewsController.getMoreTests);
 router.get("/welcome", authViewsController.getWelcomePage);
 router.get("/home", authController.protect, authViewsController.getHomePage);
 router.post("/logout", authController.logout);
+router.post("/deleteMe", authController.protect, authController.deleteMe);
 module.exports = router;

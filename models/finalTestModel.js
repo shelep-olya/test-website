@@ -3,6 +3,10 @@ const User = require("./userModel");
 const testBlockSchema = require("./testBlockSchema");
 
 const testSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, "please give a name for your test"],
+  },
   numberOfQuestions: {
     type: Number,
     required: [true, "Please enter number of questions."],
@@ -36,6 +40,10 @@ const testSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: false,
+  },
+  description: {
+    type: String,
+    required: [true, "please enter a short description of your test"],
   },
   numberOfResults: {
     type: Number,
