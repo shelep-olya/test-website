@@ -6,24 +6,49 @@ const handlerFactory = require("./handlerFactory");
 const sendTest = (data, statusCode, res, redirectUrl) => {
   res.status(statusCode).render(redirectUrl, { data });
 };
-exports.addTest = catchAsync(async (req, res, next) => {
-  const { numberOfQuestions, testBlocks, author, numberOfResults, results } =
-    req.body;
-  const newTest = await Test.create({
+exports.addNumberOfQuestions = (req, res) => {
+  const numberOfQuestions = req.body.numberOfQuestions;
+  const numberOfResults = req.body.numberOfResults;
+  res.render("testBlocks", { numberOfQuestions, numberOfResults, user: true });
+};
+
+exports.submitTest = catchAsync(async (req, res, next) => {
+  console.log(req.body); // Log the entire request body for debugging
+
+  const {
     numberOfQuestions,
-    testBlocks,
+    questions,
+    name,
     author,
+    description,
     numberOfResults,
     results,
-    user: true,
-  });
-  await newTest.save();
-  res.status(201).json({
-    status: "success",
-    data: newTest,
-  });
-});
+  } = req.body;
 
+  // Validate input data
+  if (!questions || !Array.isArray(questions)) {
+    return res.status(400).send("Questions are required and must be an array.");
+  }
+
+  const testBlocks = questions.map((question) => ({
+    question: question.question,
+    answers: question.answers,
+  }));
+
+  const newTest = await Test.create({
+    name,
+    numberOfQuestions: parseInt(numberOfQuestions, 10), // Ensure numberOfQuestions is a number
+    testBlocks,
+    author,
+    description,
+    numberOfResults: parseInt(numberOfResults, 10), // Ensure numberOfResults is a number
+    results: Array.isArray(results) ? results : [], // Ensure results is an array
+  });
+
+  await newTest.save();
+
+  res.status(201).render("submitResults", { newTest, user: true });
+});
 exports.deleteTest = handlerFactory.deleteOne(Test);
 exports.getAllTests = catchAsync(async (req, res, next) => {
   const tests = await Test.find();

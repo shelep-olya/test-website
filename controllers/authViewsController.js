@@ -8,6 +8,12 @@ exports.getMe = (req, res) => {
     data: { user },
   });
 };
+exports.getAddTestForm = (req, res) => {
+  res.render("addTest", {
+    title: "create your own test",
+    user: true,
+  });
+};
 exports.getMoreTests = (req, res) => {
   res.render("moreTests", {
     title: "more tests",

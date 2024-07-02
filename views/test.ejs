@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Page</title>
-</head>
-<body>
-    <form action="/submitTest/<%= newTest._id %>" method="POST">
+<form action="/submitTest/<%= newTest._id %>" method="POST">
         <h2 class="main-h1"> by <%= newTest.author %></h2>
         <% for (let i = 0; i < newTest.numberOfQuestions; i++) { %>
             <div class="test-wrapper">
@@ -27,6 +19,6 @@
         <div class="test-link-wrapper">
         <button class="submit-btn" type="submit">Submit Test</button>
     </div>
-    </form>
-</body>
-</html>
+</form>
+
+
