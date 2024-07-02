@@ -27,7 +27,6 @@ exports.addTest = catchAsync(async (req, res, next) => {
 exports.deleteTest = handlerFactory.deleteOne(Test);
 exports.getAllTests = catchAsync(async (req, res, next) => {
   const tests = await Test.find();
-  console.log("Fetched tests:", tests);
   if (!tests.length) {
     return res.status(404).render("moreTests", {
       title: "More tests",
@@ -37,8 +36,7 @@ exports.getAllTests = catchAsync(async (req, res, next) => {
     });
   }
   res.status(200).render("moreTests", {
-    title: "More tests",
-    tests,
+    data: tests,
     user: true,
   });
 });

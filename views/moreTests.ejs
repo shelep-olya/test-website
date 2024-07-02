@@ -1,8 +1,8 @@
 <div>
     <h1>Here are the other tests</h1>
-    <% if (tests.length > 0) { %>
+    <% if (data.tests.length > 0) { %>
       <div>
-        <% tests.forEach(test => { %>
+        <% data.tests.forEach(test => { %>
           <div class="container">
             <h2><%= test.name %></h2>
             <p><%= test.author %></p>
@@ -12,5 +12,5 @@
       </div>
     <% } else { %>
       <p>No tests available</p>
-    <% } %>
+    <% } %> 
   </div>
