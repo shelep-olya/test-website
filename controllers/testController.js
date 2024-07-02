@@ -1,11 +1,7 @@
 const Test = require("./../models/finalTestModel");
-const User = require("./../models/userModel");
 const catchAsync = require("./../utils/catch-async");
 const handlerFactory = require("./handlerFactory");
 
-const sendTest = (data, statusCode, res, redirectUrl) => {
-  res.status(statusCode).render(redirectUrl, { data });
-};
 exports.addNumberOfQuestions = (req, res) => {
   const numberOfQuestions = req.body.numberOfQuestions;
   const numberOfResults = req.body.numberOfResults;
@@ -13,8 +9,6 @@ exports.addNumberOfQuestions = (req, res) => {
 };
 
 exports.submitTest = catchAsync(async (req, res, next) => {
-  console.log(req.body); // Log the entire request body for debugging
-
   const {
     numberOfQuestions,
     questions,
@@ -24,12 +18,9 @@ exports.submitTest = catchAsync(async (req, res, next) => {
     numberOfResults,
     results,
   } = req.body;
-
-  // Validate input data
   if (!questions || !Array.isArray(questions)) {
     return res.status(400).send("Questions are required and must be an array.");
   }
-
   const testBlocks = questions.map((question) => ({
     question: question.question,
     answers: question.answers,
@@ -46,10 +37,8 @@ exports.submitTest = catchAsync(async (req, res, next) => {
   });
 
   await newTest.save();
-
-  res.status(201).render("submitResults", { newTest, user: true });
+  res.status(201).redirect("home");
 });
-exports.deleteTest = handlerFactory.deleteOne(Test);
 exports.getAllTests = catchAsync(async (req, res, next) => {
   const tests = await Test.find();
   if (!tests.length) {
@@ -65,16 +54,5 @@ exports.getAllTests = catchAsync(async (req, res, next) => {
     user: true,
   });
 });
-exports.updateTest = catchAsync(async (req, res, next) => {
-  const updatedData = req.body;
-  const updatedTest = await Test.findByIdAndUpdate(
-    updatedData.id,
-    updatedData,
-    {
-      new: true,
-    }
-  );
-  sendTest(updatedTest, 200, res, "test");
-});
-
+exports.deleteTest = handlerFactory.deleteOne(Test);
 exports.getTest = handlerFactory.getOne(Test);
