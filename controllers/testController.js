@@ -39,6 +39,14 @@ exports.submitTest = catchAsync(async (req, res, next) => {
   await newTest.save();
   res.status(201).redirect("home");
 });
+exports.getAllTestsOfOne = catchAsync(async (req, res, next) => {
+  const id = req.body.id;
+  const tests = Test.findById(id);
+  res.status(200).render("myTests", {
+    user: true,
+    data: tests,
+  });
+});
 exports.getAllTests = catchAsync(async (req, res, next) => {
   const tests = await Test.find();
   if (!tests.length) {
