@@ -1,22 +1,21 @@
 <form action="/submitTest" method="POST">
-    <h2 class="main-h1">Create your test</h2>
-    <input type="hidden" name="numberOfQuestions" value="<%= numberOfQuestions %>">
-    <input type="hidden" name="numberOfResults" value="<%= numberOfResults %>">
-    <input type="text" name="name" placeholder="Enter test name" required>
-    <input type="text" name="author" placeholder="Enter author name" required>
-    <input type="text" name="description" placeholder="Enter test description" required>
-    <% for (let i = 0; i < numberOfQuestions; i++) { %>
-      <div class="test-block">
-        <h3>Question <%= i + 1 %></h3>
-        <input type="text" name="questions[<%= i %>][question]" placeholder="Enter question" required>
-        <input type="text" name="questions[<%= i %>][answers][]" placeholder="Enter answer 1" required>
-        <input type="text" name="questions[<%= i %>][answers][]" placeholder="Enter answer 2" required>
-        <input type="text" name="questions[<%= i %>][answers][]" placeholder="Enter answer 3" required>
-      </div>
-    <% } %>
-    <% for (let i = 0; i < numberOfResults; i++) { %>
-      <input type="text" name="results[]" placeholder="Enter result <%= i + 1 %>" required>
-    <% } %>
-    <button type="submit">Submit Test</button>
-  </form>
-  
+  <h2 class="main-h1">Create your test</h2>
+  <input type="hidden" name="numberOfQuestions" value="<%= numberOfQuestions %>">
+  <input type="hidden" name="numberOfResults" value="<%= numberOfResults %>">
+  <input type="text" name="name" placeholder="Enter test name" required>
+  <input type="text" name="author" placeholder="Enter author name" required>
+  <input type="text" name="description" placeholder="Enter test description" required>
+  <% for (let i = 0; i < numberOfQuestions; i++) { %>
+    <div class="test-block">
+      <h3>Question <%= i + 1 %></h3>
+      <input type="text" name="questions[<%= i %>][question]" placeholder="Enter question" required>
+      <input type="text" name="questions[<%= i %>][answers][]" placeholder="Enter answer 1" required>
+      <input type="text" name="questions[<%= i %>][answers][]" placeholder="Enter answer 2" required>
+      <input type="text" name="questions[<%= i %>][answers][]" placeholder="Enter answer 3" required>
+    </div>
+  <% } %>
+  <% for (let i = 0; i < numberOfResults; i++) { %>
+    <input type="text" name="results[]" placeholder="Enter result <%= i + 1 %>" required>
+  <% } %>
+  <button type="submit">Submit Test</button>
+</form>
