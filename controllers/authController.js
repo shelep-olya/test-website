@@ -6,23 +6,6 @@ const User = require("./../models/userModel");
 const bcrypt = require("bcrypt");
 const { createAndSendToken } = require("./../utils/auth");
 const { promisify } = require("util");
-// // exports.signup = catchAsync(async (req, res, next) => {
-// //   const email = req.body.email;
-
-// //   const data = {
-// //     name: req.body.username,
-// //     password: req.body.password,
-// //     passwordConfirm: req.body.passwordConfirm,
-// //     email: email,
-// //   };
-// //   console.log(data);
-// //   let user = await User.findOne({ email });
-// //   if (user) return res.redirect("/");
-
-// //   user = new User({ data });
-// //   await user.save();
-// //   res.redirect("/login");
-// // });
 
 exports.signup = catchAsync(async (req, res, next) => {
   const data = {
@@ -77,41 +60,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   req.user = user;
   next();
 });
-// // exports.protect = catchAsync(async (req, res, next) => {
-// //   let token;
-// //   if (
-// //     req.headers.authorization &&
-// //     req.headers.authorization.startsWith("Bearer")
-// //   ) {
-// //     token = req.headers.authorization.split(" ")[1];
-// //   }
-// //   if (!token) {
-// //     return next(
-// //       new AppError("You are not logged in. Please log in to get access.", 401)
-// //     );
-// //   }
-// //   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
-// //   const newUser = await User.findById(decoded.id);
-// //   if (!newUser) {
-// //     return next(new AppError("The user no longer exists.", 401));
-// //   }
-// // });
-// // // if (newUser.passwordChangedAt(decoded.iat)) {
-// // //   return next(
-// // //     new AppError(
-// // //       "User has changed password recently. Please login again.",
-// // //       401
-// // //     )
-// // //   );
-// // //   }
-// // //   req.user = newUser;
-// // //   next();
-// // // });
-// exports.logout = (req, res) => {
-//   res.clearCookie("jwt");
-//   res.redirect("/");
-// };
 exports.logout = (req, res) => {
   res.cookie("jwt", "loggedout", {
     expires: new Date(Date.now() + 10 * 1000),

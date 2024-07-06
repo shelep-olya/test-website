@@ -29,14 +29,6 @@ const testSchema = new mongoose.Schema({
     },
   },
   author: {
-    type: String,
-    required: [true, "Please provide your username or pseudonym."],
-    default: async function () {
-      const user = await User.findById(this.authorId);
-      return user ? user.name : "";
-    },
-  },
-  authorId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: false,

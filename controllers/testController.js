@@ -28,12 +28,12 @@ exports.submitTest = catchAsync(async (req, res, next) => {
 
   const newTest = await Test.create({
     name,
-    numberOfQuestions: parseInt(numberOfQuestions, 10), // Ensure numberOfQuestions is a number
+    numberOfQuestions: parseInt(numberOfQuestions, 10),
     testBlocks,
     author,
     description,
-    numberOfResults: parseInt(numberOfResults, 10), // Ensure numberOfResults is a number
-    results: Array.isArray(results) ? results : [], // Ensure results is an array
+    numberOfResults: parseInt(numberOfResults, 10),
+    results: Array.isArray(results) ? results : [],
   });
 
   await newTest.save();
@@ -47,20 +47,15 @@ exports.getAllTestsOfOne = catchAsync(async (req, res, next) => {
     data: tests,
   });
 });
-exports.getAllTests = catchAsync(async (req, res, next) => {
-  const tests = await Test.find();
-  if (!tests.length) {
-    return res.status(404).render("moreTests", {
-      title: "More tests",
-      tests: [],
-      user: true,
-      message: "No tests found",
-    });
+exports.getMoreTests = catchAsync(async (req, res, next) => {
+  try {
+    const tests = await Test.find(); // Assuming Test is your Mongoose model
+    res.render("moreTests", { tests }); // Pass tests to the EJS template
+  } catch (err) {
+    console.error("Error fetching tests:", err);
+    // Handle error appropriately, e.g., return an error page
+    res.status(500).send("Error fetching tests");
   }
-  res.status(200).render("moreTests", {
-    data: tests,
-    user: true,
-  });
 });
 exports.deleteTest = handlerFactory.deleteOne(Test);
 exports.getTest = handlerFactory.getOne(Test);
