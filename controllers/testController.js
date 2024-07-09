@@ -41,21 +41,14 @@ exports.submitTest = catchAsync(async (req, res, next) => {
 });
 exports.getAllTestsOfOne = catchAsync(async (req, res, next) => {
   const id = req.body.id;
-  const tests = Test.findById(id);
+  const tests = await Test.findById(id); // Ensure await here to fetch data
+  if (!tests) {
+    return res.status(404).send("No tests found"); // Handle case where no tests are found
+  }
   res.status(200).render("myTests", {
     user: true,
-    data: tests,
+    tests: [tests], // Ensure tests is passed as an array
   });
-});
-exports.getMoreTests = catchAsync(async (req, res, next) => {
-  try {
-    const tests = await Test.find(); // Assuming Test is your Mongoose model
-    res.render("moreTests", { tests }); // Pass tests to the EJS template
-  } catch (err) {
-    console.error("Error fetching tests:", err);
-    // Handle error appropriately, e.g., return an error page
-    res.status(500).send("Error fetching tests");
-  }
 });
 exports.deleteTest = handlerFactory.deleteOne(Test);
 exports.getTest = handlerFactory.getOne(Test);
