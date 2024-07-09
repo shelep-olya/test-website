@@ -5,7 +5,7 @@ const authController = require("../controllers/authController");
 const router = express.Router();
 
 router.get("/me", authController.protect, authViewsController.getMe);
-
+router.get("/moreTests", authController.protect, testController.getMoreTests);
 router.get("/welcome", authViewsController.getWelcomePage);
 router.get("/home", authController.protect, authViewsController.getHomePage);
 router.post("/logout", authController.logout);
