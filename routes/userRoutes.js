@@ -15,7 +15,7 @@ router.delete("/deleteMe", userController.deleteMe);
 router
   .route("/")
   .get(userController.getAllUsers)
-  .post(userController.createUser);
+  .post(userController.upload, userController.createUser);
 
 router
   .route("/:id")

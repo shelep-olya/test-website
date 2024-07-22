@@ -1,7 +1,21 @@
 const handlerFactory = require("./handlerFactory");
+const multer = require("multer");
 const AppError = require("./../utils/app-error");
 const catchAsync = require("./../utils/catch-async");
 const User = require("./../models/userModel");
+
+const Storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/uploads");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+exports.upload = multer({
+  storage: Storage,
+}).single("photo");
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
@@ -17,6 +31,7 @@ exports.getMe = (req, res, next) => {
   res.status(200).render("me");
   console.log(user);
 };
+
 exports.updateMe = catchAsync(async (req, res, next) => {
   if (req.body.password || req.body.passwordConfirm) {
     return next(new AppError("You cannot change password here.", 400));
@@ -43,8 +58,23 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
     data: null,
   });
 });
+
+exports.createUser = catchAsync(async (req, res) => {
+  const user = new User({
+    name: req.body.name,
+    email: req.body.email,
+    photo: {
+      data: req.file.filename,
+      contentType: "image/png",
+    },
+    password: req.body.password,
+    passwordConfirm: req.body.passwordConfirm,
+  });
+  user.save();
+  res.status(201).json(user);
+});
+
 exports.getAllUsers = handlerFactory.getAll(User);
 exports.getUser = handlerFactory.getOne(User);
 exports.updateUser = handlerFactory.updateOne(User);
-exports.createUser = handlerFactory.createOne(User);
 exports.deleteUser = handlerFactory.deleteOne(User);
