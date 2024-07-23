@@ -46,6 +46,13 @@ const userSchema = new mongoose.Schema({
     default: true,
     select: false,
   },
+  tests: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Test",
+      default: 0,
+    },
+  ],
 });
 
 userSchema.pre("save", async function (next) {

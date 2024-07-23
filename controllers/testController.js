@@ -1,3 +1,4 @@
+const User = require("../models/userModel");
 const Test = require("./../models/finalTestModel");
 const catchAsync = require("./../utils/catch-async");
 const handlerFactory = require("./handlerFactory");
@@ -13,7 +14,6 @@ exports.submitTest = catchAsync(async (req, res, next) => {
     numberOfQuestions,
     questions,
     name,
-    author,
     description,
     numberOfResults,
     results,
@@ -25,12 +25,17 @@ exports.submitTest = catchAsync(async (req, res, next) => {
     question: question.question,
     answers: question.answers,
   }));
-
+  const id = req.params.id;
+  const author = req.user;
+  console.log(id);
+  if (!author) {
+    return res.status(400).send("Author not found.");
+  }
   const newTest = await Test.create({
     name,
     numberOfQuestions: parseInt(numberOfQuestions, 10),
     testBlocks,
-    author,
+    author: author._id,
     description,
     numberOfResults: parseInt(numberOfResults, 10),
     results: Array.isArray(results) ? results : [],
@@ -41,13 +46,24 @@ exports.submitTest = catchAsync(async (req, res, next) => {
 });
 exports.getMoreTests = catchAsync(async (req, res, next) => {
   try {
-    const tests = await Test.find(); // Assuming Test is your Mongoose model
-    res.render("moreTests", { tests, user: true }); // Pass tests to the EJS template
+    const tests = await Test.find();
+    res.render("moreTests", { tests, user: true });
   } catch (err) {
     console.error("Error fetching tests:", err);
     // Handle error appropriately, e.g., return an error page
     res.status(500).send("Error fetching tests");
   }
+});
+exports.getMyTests = catchAsync(async (req, res, next) => {
+  const authorId = req.user._id; // Get the authenticated user's ID
+
+  const tests = await Test.find({ author: authorId });
+
+  if (!tests || tests.length === 0) {
+    return res.status(404).send("You didn't create any tests");
+  }
+
+  res.status(200).render("myTests", { tests, user: req.user });
 });
 exports.deleteTest = handlerFactory.deleteOne(Test);
 exports.getTest = handlerFactory.getOne(Test);

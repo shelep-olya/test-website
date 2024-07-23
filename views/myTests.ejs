@@ -1,0 +1,15 @@
+<div>
+    <h1>Here are the other tests</h1>
+    <% if (tests.length > 0) { %>
+        <div>
+            <% tests.forEach(test => { %>
+                <div class="container">
+                    <h2><%= test.name %></h2>
+                    <p><%= test.description %></p>
+                </div>
+            <% }); %>
+        </div>
+    <% } else { %>
+        <p>No tests found.</p>
+    <% } %>
+  </div>
