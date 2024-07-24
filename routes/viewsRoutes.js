@@ -7,7 +7,7 @@ router.get("/about", viewsController.getAboutPage);
 router.get("/results", viewsController.getResultsPage);
 router.get("/test", viewsController.getTestPage);
 router.get("/login", viewsController.logIn);
-// router.get("/signup", viewsController.signUp);
+router.get("/signup", viewsController.signUp);
 router.post("/submitTest/:id", viewsController.submitTest);
 
 module.exports = router;

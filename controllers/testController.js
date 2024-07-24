@@ -44,18 +44,15 @@ exports.submitTest = catchAsync(async (req, res, next) => {
   await newTest.save();
   res.status(201).redirect("home");
 });
-exports.getMoreTests = catchAsync(async (req, res, next) => {
-  try {
-    const tests = await Test.find();
-    res.render("moreTests", { tests, user: true });
-  } catch (err) {
-    console.error("Error fetching tests:", err);
-    // Handle error appropriately, e.g., return an error page
-    res.status(500).send("Error fetching tests");
-  }
+exports.getMoreTests = catchAsync(async (req, res) => {
+  const authorId = req.user._id;
+  const user = await User.findById(authorId);
+
+  const tests = await Test.find();
+  res.render("moreTests", { tests, user: user });
 });
 exports.getMyTests = catchAsync(async (req, res, next) => {
-  const authorId = req.user._id; // Get the authenticated user's ID
+  const authorId = req.user._id;
 
   const tests = await Test.find({ author: authorId });
 

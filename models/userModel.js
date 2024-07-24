@@ -41,11 +41,6 @@ const userSchema = new mongoose.Schema({
       message: "Passwords are not the same.",
     },
   },
-  active: {
-    type: Boolean,
-    default: true,
-    select: false,
-  },
   tests: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -62,33 +57,11 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-userSchema.pre(/^find/, function (next) {
-  this.find({ active: { $ne: false } });
-  next();
-});
-
-userSchema.pre("save", function (next) {
-  if (!this.isModified("password") || this.isNew) return next();
-  this.passwordChangedAt = Date.now() - 1000;
-  next();
-});
-
 userSchema.methods.correctPassword = async function (
   candidatePassword,
   userPassword
 ) {
   return await bcrypt.compare(candidatePassword, userPassword);
-};
-
-userSchema.methods.changePasswordAfter = function (JWTTimeStamp) {
-  if (this.passwordChangedAt) {
-    const changedTimeStamp = parseInt(
-      this.passwordChangedAt.getTime() / 1000,
-      10
-    );
-    return JWTTimeStamp < changedTimeStamp;
-  }
-  return false;
 };
 
 userSchema.methods.createPasswordResetToken = function () {

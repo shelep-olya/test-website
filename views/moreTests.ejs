@@ -1,16 +1,15 @@
-<div>
-    <h1>Here are the other tests</h1>
+<div class="more-tests">
     <% if (tests.length > 0) { %>
-        <div>
+        <div class="wrapper">
             <% tests.forEach(test => { %>
-                <div class="container">
-                    <h2><%= test.name %></h2>
-                    <p><%= test.author %></p>
-                    <p><%= test.description %></p>
+                <div class="test">
+                    <h2><span>name:</span> <%= test.name %></h2>
+                    <p class="description">description: <%= test.description %></p>
+                    <p class="created-by">created by: <%= user.name %></p>
                 </div>
             <% }); %>
         </div>
     <% } else { %>
         <p>No tests found.</p>
     <% } %>
-  </div>
+</div>

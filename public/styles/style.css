@@ -303,3 +303,63 @@ input[type="radio"] {
   width: auto;
   height: max-content;
 }
+
+/* MORE TESTS */
+.more-tests {
+  background-color: #fff;
+  padding: 2rem;
+}
+
+.more-tests .wrapper {
+  border: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.more-tests .wrapper .test {
+  background-color: #f0f0f0;
+  border: solid 0.1rem #799b5d;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  width: calc(33.33% - 2rem);
+  box-sizing: border-box;
+}
+
+.more-tests .wrapper .test:hover {
+  background-color: #c3d1b7;
+  transition: scale(1.3);
+  cursor: pointer;
+}
+
+.more-tests .wrapper .test h2 {
+  color: #333;
+  font-weight: 600;
+  font-size: 1.2rem;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+.more-tests .wrapper .test h2 span {
+  color: #8b938b;
+  font-size: 1rem;
+}
+
+.more-tests .wrapper .test p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.more-tests .wrapper .test p.description {
+  color: #666;
+}
+
+.more-tests .wrapper .test p.created-by {
+  color: #8b938b;
+  font-weight: 650;
+}
+
+.more-tests .wrapper .test p span {
+  color: #b7c2b7;
+}
