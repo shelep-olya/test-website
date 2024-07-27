@@ -1,6 +1,8 @@
 const express = require("express");
 const authController = require("./../controllers/authController");
 const userController = require("./../controllers/userController");
+const { postResFunc } = require("../utils/test-functionallity");
+
 const router = express.Router();
 
 router.post("/submit", (req, res) => postResFunc(req, res));

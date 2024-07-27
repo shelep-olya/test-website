@@ -1,5 +1,5 @@
 <form action="/submitTest/<%= newTest._id %>" method="POST">
-        <h2 class="main-h1"> by <%= newTest.author.name %></h2>
+        <h2 class="main-h1"> by <%= author %></h2>
         <% for (let i = 0; i < newTest.numberOfQuestions; i++) { %>
             <div class="test-wrapper">
                 <div class="question">

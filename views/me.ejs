@@ -8,24 +8,28 @@
         <img src="/images/menu.png" class="menu-photo" alt="menu-photo">
         <img src="/images/settings.png" class="settings-photo" alt="settings-photo">
         <img src="/uploads/<%= data.user.photo.data %>" alt="profile-photo" class="profile-photo">
-        <h3>
-            <%= data.user.name %>
-        </h3>
-        <div>
-            <div class="settings">
-                <form action="/logout" method="POST" >
-                    <button type="submit"> Log out </button>
-                </form>
-            </div>
-            <div class="settings">
-                <p> <a href="/login">Change account</a></p>
-            </div>
-            <div class="settings">
-                <form action="/deleteMe" method="POST" >
-                    <button type="submit"> Delete account </button>
-                </form>
-            </div>
-            
+        <h3><%= data.user.name %></h3>
+    
+       
+        <form action="/auth" method="POST" enctype="multipart/form-data">
+            <label for="photo">Upload new profile photo:</label>
+            <input type="file" name="photo" accept="image/*" required>
+            <button type="submit">Update Photo</button>
+        </form>
+        
+        <div class="settings">
+            <form action="/logout" method="PATCH" >
+                <button type="submit">Log out</button>
+            </form>
+        </div>
+        <div class="settings">
+            <p><a href="/login">Change account</a></p>
+        </div>
+        <div class="settings">
+            <form action="/deleteMe" method="POST" >
+                <button type="submit">Delete account</button>
+            </form>
         </div>
     </div>
+    
 </div>

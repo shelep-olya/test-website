@@ -1,10 +1,11 @@
 const handlerFactory = require("./handlerFactory");
 const multer = require("multer");
+const path = require("path");
 const AppError = require("./../utils/app-error");
 const catchAsync = require("./../utils/catch-async");
 const User = require("./../models/userModel");
 
-const Storage = multer.diskStorage({
+const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "public/uploads");
   },
@@ -14,8 +15,24 @@ const Storage = multer.diskStorage({
 });
 
 exports.upload = multer({
-  storage: Storage,
+  storage: storage,
+  limits: { fileSize: 1000000 },
+  fileFilter: function (req, file, cb) {
+    checkFileType(file, cb);
+  },
 }).single("photo");
+
+function checkFileType(file, cb) {
+  const filetypes = /jpeg|jpg|png|gif/;
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype = filetypes.test(file.mimetype);
+
+  if (mimetype && extname) {
+    return cb(null, true);
+  } else {
+    cb("Error: Images Only!");
+  }
+}
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
@@ -31,26 +48,29 @@ exports.getMe = (req, res, next) => {
   res.status(200).render("me");
   console.log(user);
 };
-
 exports.updateMe = catchAsync(async (req, res, next) => {
-  if (req.body.password || req.body.passwordConfirm) {
-    return next(new AppError("You cannot change password here.", 400));
-  }
+  upload(req, res, async (err) => {
+    if (err) {
+      return next(new AppError(err, 400));
+    } else {
+      const filteredBody = filterObj(req.body, "name", "email");
+      if (req.file) {
+        filteredBody.photo = req.file.filename;
+      }
 
-  const filteredBody = filterObj(req.body, "name", "email");
-  const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
-    new: true,
-    runValidators: true,
-  });
+      const updatedUser = await User.findByIdAndUpdate(
+        req.user.id,
+        filteredBody,
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
 
-  res.status(200).json({
-    status: "success",
-    data: {
-      data: updatedUser,
-    },
+      res.status(200).redirect("home");
+    }
   });
 });
-
 exports.deleteMe = catchAsync(async (req, res, next) => {
   await User.findByIdAndDelete(req.user.id, { active: false });
   res.status(204).json({
