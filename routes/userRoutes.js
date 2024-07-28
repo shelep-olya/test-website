@@ -10,7 +10,6 @@ router.post("/submit", (req, res) => postResFunc(req, res));
 router.post("/signup", authController.signup);
 router.post("/login", authController.login);
 
-router.get("/me", userController.getMe);
 router.patch("/updateMe", userController.updateMe);
 router.delete("/deleteMe", userController.deleteMe);
 

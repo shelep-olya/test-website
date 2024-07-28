@@ -45,22 +45,18 @@ exports.submitTest = catchAsync(async (req, res, next) => {
   res.status(201).redirect("home");
 });
 exports.getMoreTests = catchAsync(async (req, res) => {
-  const authorId = req.user._id;
-  const user = await User.findById(authorId);
+  const testFound = await Test.find();
 
-  const tests = await Test.find();
-  res.render("moreTests", { tests, user: user });
+  const tests = await Promise.all(
+    testFound.map(async (test) => {
+      const user = await User.findById(test.author);
+      const author = user ? user.name : "Unknown Author";
+      return { ...test.toObject(), author };
+    })
+  );
+
+  res.render("moreTests", { tests, user: true });
 });
-exports.getMyTests = catchAsync(async (req, res, next) => {
-  const authorId = req.user._id;
 
-  const tests = await Test.find({ author: authorId });
-
-  if (!tests || tests.length === 0) {
-    return res.status(404).send("You didn't create any tests");
-  }
-
-  res.status(200).render("myTests", { tests, user: req.user });
-});
 exports.deleteTest = handlerFactory.deleteOne(Test);
 exports.getTest = handlerFactory.getOne(Test);

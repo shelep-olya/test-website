@@ -562,3 +562,12 @@ form textarea {
   flex-wrap: wrap;
   gap: 20px;
 }
+p .test-form-link {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #333;
+  cursor: pointer;
+}
+p .test-form-link:hover {
+  color: #666;
+}

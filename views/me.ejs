@@ -1,33 +1,45 @@
 <div class="profile-body">
-    <div class="profile-container">
-      <div class="user-info">
-        <div class="profile-photo-container">
-          <img src="data:<%= data.user.photo.contentType %>;base64,<%= data.user.photo.data.toString('base64') %>" alt="profile-photo" class="profile-photo">
-          <span class="tooltip">Change Photo</span>
-        </div>
-        <h3 class="user-name"><%= data.user.name %></h3>
+  <div class="profile-container">
+    <div class="user-info">
+      <div class="profile-photo-container">
+        <img src="data:<%= user.photo.contentType %>;base64,<%= user.photo.data.toString('base64') %>" alt="profile-photo" class="profile-photo">
+        <span class="tooltip">Change Photo</span>
       </div>
-      <div class="account-settings">
-        <form action="/auth" method="POST" enctype="multipart/form-data" class="photo-upload-form">
-          <input type="file" name="photo" accept="image/*" id="photo" required>
-          <label for="photo">Upload new profile photo</label>
-          <button type="submit">Update Photo</button>
-        </form>
-        <form action="/logout" method="POST">
-          <button type="submit" class="icon-button"><img src="/images/logout.png" alt="Logout"></button>
-        </form>
-        <form action="/login" method="POST">
-          <button type="submit" class="icon-button"><img src="/images/change.png" alt="Change Account"></button>
-        </form>
-        <form action="/deleteMe" method="POST">
-          <button type="submit" class="icon-button"><img src="/images/delete.png" alt="Delete Account"></button>
-        </form>
-      </div>
-      <div class="tests-container">
-        <h2>Your Tests</h2>
-        <div class="test-list">
-        </div>
+      <h3 class="user-name"><%= user.name %></h3>
+    </div>
+    <div class="account-settings">
+      <form action="/auth" method="POST" enctype="multipart/form-data" class="photo-upload-form">
+        <input type="file" name="photo" accept="image/*" id="photo" required>
+        <label for="photo">Upload new profile photo</label>
+        <button type="submit">Update Photo</button>
+      </form>
+      <form action="/logout" method="POST">
+        <button type="submit" class="icon-button"><img src="/images/logout.png" alt="Logout"></button>
+      </form>
+      <form action="/login" method="POST">
+        <button type="submit" class="icon-button"><img src="/images/change.png" alt="Change Account"></button>
+      </form>
+      <form action="/deleteMe" method="POST">
+        <button type="submit" class="icon-button"><img src="/images/delete.png" alt="Delete Account"></button>
+      </form>
+    </div>
+    <div class="tests-container">
+      <h2>Your Tests</h2>
+      <div class="more-tests">
+        <% if (tests.length > 0) { %>
+          <div class="wrapper">
+              <% tests.forEach(test => { %>
+                  <div class="test">
+                      <h2><span>name:</span> <%= test.name %></h2>
+                      <p class="description">description: <%= test.description %></p>
+                      <a href="/test/<%= test._id %>">Take this test</a>
+                  </div>
+              <% }); %>
+          </div>
+      <% } else { %>
+         <p> <a href="/addTest" class="test-form-link">you didn't create any test yet ...</a></p>
+      <% } %>
       </div>
     </div>
   </div>
-  
+</div>
