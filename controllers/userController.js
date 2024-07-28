@@ -41,12 +41,13 @@ const filterObj = (obj, ...allowedFields) => {
   });
   return newObj;
 };
-
-exports.getMe = (req, res, next) => {
-  req.params.id = req.user.id;
-  const user = User.findById(req.params.id);
-  res.status(200).render("me");
-  console.log(user);
+exports.getMe = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id).exec();
+    res.status(200).render("me", { user });
+  } catch (err) {
+    next(err);
+  }
 };
 exports.updateMe = catchAsync(async (req, res, next) => {
   upload(req, res, async (err) => {

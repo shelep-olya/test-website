@@ -2,6 +2,11 @@ const crypto = require("crypto");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const validator = require("validator");
+const fs = require("fs");
+const path = require("path");
+
+const defaultPhotoPath = path.join(__dirname, "../public/uploads/default.jpg");
+const defaultPhotoData = fs.readFileSync(defaultPhotoPath);
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -19,11 +24,13 @@ const userSchema = new mongoose.Schema({
   photo: {
     data: {
       type: Buffer,
+      default: defaultPhotoData,
       required: false,
     },
     contentType: {
       type: String,
       required: false,
+      default: "image/png",
     },
   },
   password: {

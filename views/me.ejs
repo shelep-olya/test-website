@@ -7,7 +7,8 @@
     <div class="profile-box">
         <img src="/images/menu.png" class="menu-photo" alt="menu-photo">
         <img src="/images/settings.png" class="settings-photo" alt="settings-photo">
-        <img src="/uploads/<%= data.user.photo.data %>" alt="profile-photo" class="profile-photo">
+        <img src="data:<%= data.user.photo.contentType %>;base64,<%= data.user.photo.data.toString('base64') %>" alt="profile-photo" class="profile-photo">
+
         <h3><%= data.user.name %></h3>
     
        
