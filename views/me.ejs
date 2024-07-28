@@ -1,36 +1,33 @@
-<div class="my-tests-wrap">
-    <form action="/myTests" method="GET" >
-        <button type="submit">go to my tests</button>
-    </form>
-</div>
-<div class="container">
-    <div class="profile-box">
-        <img src="/images/menu.png" class="menu-photo" alt="menu-photo">
-        <img src="/images/settings.png" class="settings-photo" alt="settings-photo">
-        <img src="data:<%= data.user.photo.contentType %>;base64,<%= data.user.photo.data.toString('base64') %>" alt="profile-photo" class="profile-photo">
-
-        <h3><%= data.user.name %></h3>
-    
-       
-        <form action="/auth" method="POST" enctype="multipart/form-data">
-            <label for="photo">Upload new profile photo:</label>
-            <input type="file" name="photo" accept="image/*" required>
-            <button type="submit">Update Photo</button>
+<div class="profile-body">
+    <div class="profile-container">
+      <div class="user-info">
+        <div class="profile-photo-container">
+          <img src="data:<%= data.user.photo.contentType %>;base64,<%= data.user.photo.data.toString('base64') %>" alt="profile-photo" class="profile-photo">
+          <span class="tooltip">Change Photo</span>
+        </div>
+        <h3 class="user-name"><%= data.user.name %></h3>
+      </div>
+      <div class="account-settings">
+        <form action="/auth" method="POST" enctype="multipart/form-data" class="photo-upload-form">
+          <input type="file" name="photo" accept="image/*" id="photo" required>
+          <label for="photo">Upload new profile photo</label>
+          <button type="submit">Update Photo</button>
         </form>
-        
-        <div class="settings">
-            <form action="/logout" method="PATCH" >
-                <button type="submit">Log out</button>
-            </form>
+        <form action="/logout" method="POST">
+          <button type="submit" class="icon-button"><img src="/images/logout.png" alt="Logout"></button>
+        </form>
+        <form action="/login" method="POST">
+          <button type="submit" class="icon-button"><img src="/images/change.png" alt="Change Account"></button>
+        </form>
+        <form action="/deleteMe" method="POST">
+          <button type="submit" class="icon-button"><img src="/images/delete.png" alt="Delete Account"></button>
+        </form>
+      </div>
+      <div class="tests-container">
+        <h2>Your Tests</h2>
+        <div class="test-list">
         </div>
-        <div class="settings">
-            <p><a href="/login">Change account</a></p>
-        </div>
-        <div class="settings">
-            <form action="/deleteMe" method="POST" >
-                <button type="submit">Delete account</button>
-            </form>
-        </div>
+      </div>
     </div>
-    
-</div>
+  </div>
+  

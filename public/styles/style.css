@@ -201,57 +201,6 @@ input[type="radio"] {
   height: 100%;
 }
 
-/* MY ACCOUNT */
-.container {
-  width: 100%;
-  height: 100vh;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.profile-box {
-  background-color: #3a523b;
-  text-align: center;
-  padding: 40px 90px;
-  color: #959695;
-  position: relative;
-  border-radius: 20px;
-}
-.menu-photo {
-  width: 25px;
-  position: absolute;
-  left: 40px;
-  top: 40px;
-}
-.settings-photo {
-  width: 25px;
-  position: absolute;
-  right: 40px;
-  top: 40px;
-}
-.profile-photo {
-  width: 150px;
-  border-radius: 50%;
-  background: #fff;
-  padding: 6px;
-  margin-top: 40px;
-}
-.settings {
-  text-align: center;
-  justify-content: center;
-  background-color: #b7c2b7;
-  border-radius: 12px;
-  margin-top: 12px;
-  padding: 10px;
-}
-.settings button {
-  border-radius: 12px;
-  background-color: #b7c2b7;
-  border: none;
-  cursor: pointer;
-}
 /* about */
 .about {
   width: 100%;
@@ -487,4 +436,129 @@ form textarea {
 }
 .submit-test form button[type="submit"]:hover {
   background-color: #3a523b;
+}
+/* MY ACCOUNT PAGE */
+.profile-body {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 900px;
+  width: 100%;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.profile-photo-container {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-photo {
+  cursor: pointer;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border: 2px solid #ddd;
+}
+
+.tooltip {
+  visibility: hidden;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 10px;
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s, visibility 0.3s;
+  white-space: nowrap;
+  z-index: 1;
+}
+.profile-photo-container:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.user-name {
+  margin-left: 20px;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.icon-button img {
+  width: 40px;
+  height: 40px;
+}
+
+.account-settings {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-top: 20px;
+}
+.account-settings form,
+.account-settings p {
+  margin-right: 1rem;
+}
+
+.account-settings button,
+.account-settings a {
+  background-color: #acadac;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.account-settings button:hover,
+.account-settings a:hover {
+  background-color: #7d7c7c;
+}
+
+.photo-upload-form input[type="file"] {
+  display: none;
+}
+
+.photo-upload-form label {
+  cursor: pointer;
+  color: #477548;
+  text-decoration: underline;
+}
+
+.tests-container {
+  margin-top: 30px;
+  width: 100%;
+}
+.tests-container h2 {
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+.test-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
