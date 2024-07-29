@@ -1,5 +1,5 @@
 const catchAsync = require("../utils/catch-async");
-const postResFunc = require("../utils/test-functionallity");
+const testFunction = require("../utils/test-functionallity");
 const Test = require("../models/finalTestModel");
 const User = require("../models/userModel");
 exports.getHomePage = (req, res) => {
@@ -11,21 +11,20 @@ exports.getHomePage = (req, res) => {
 exports.getTestPage = catchAsync(async (req, res, next) => {
   const testId = req.params.id;
   const newTest = await Test.findById(testId);
-  const authorId = newTest.author;
-  const author = await User.findById(authorId);
+  const author = await User.findById(newTest.author);
   if (!newTest) {
     return res.status(404).json({
       status: "fail",
       message: "Test not found",
     });
   }
-
   res.status(200).render("test", {
     newTest,
     author: author.name,
-    user: req.user,
+    user: false,
   });
 });
+
 exports.submitTest = catchAsync(async (req, res, next) => {
   const testId = req.params.id;
   try {
@@ -36,8 +35,7 @@ exports.submitTest = catchAsync(async (req, res, next) => {
         message: "Test not found",
       });
     }
-    const layout = "results";
-    postResFunc(req, res, test.results, testId, layout);
+    testFunction.postResFunc(req, res, test.results, testId);
   } catch (err) {
     res.status(500).json({
       status: "error",

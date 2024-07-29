@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const validator = require("validator");
 const fs = require("fs");
 const path = require("path");
+const Test = require("./finalTestModel");
 
 const defaultPhotoPath = path.join(__dirname, "../public/uploads/default.jpg");
 const defaultPhotoData = fs.readFileSync(defaultPhotoPath);
@@ -57,6 +58,15 @@ const userSchema = new mongoose.Schema({
   ],
 });
 
+userSchema.pre("deleteOne", async function (next) {
+  try {
+    const userId = this.getQuery()["_id"]; // Retrieve the user ID from the query
+    await Test.deleteMany({ author: userId });
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   this.password = await bcrypt.hash(this.password, 12);

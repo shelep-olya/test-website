@@ -9,7 +9,7 @@ const shuffleArray = (array) => {
   return shuffledArray;
 };
 
-const postResFunc = (req, res, resultsArray, id) => {
+exports.postResFunc = (req, res, resultsArray, id) => {
   const shuffledResults = shuffleArray(resultsArray);
   const n = Math.floor(Math.random() * shuffledResults.length);
   const resMessage = shuffledResults[n];
@@ -17,12 +17,10 @@ const postResFunc = (req, res, resultsArray, id) => {
   res.render("results", { resMessage, user: false, id });
 };
 
-const authPostResFunc = (req, res, resultsArray, id) => {
+exports.authPostResFunc = (req, res, resultsArray, id) => {
   const shuffledResults = shuffleArray(resultsArray);
   const n = Math.floor(Math.random() * shuffledResults.length);
   const resMessage = shuffledResults[n];
 
   res.render("authResults", { resMessage, user: true, id });
 };
-module.exports = postResFunc;
-module.exports = authPostResFunc;

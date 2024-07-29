@@ -4,6 +4,7 @@ const path = require("path");
 const AppError = require("./../utils/app-error");
 const catchAsync = require("./../utils/catch-async");
 const User = require("./../models/userModel");
+const Test = require("./../models/finalTestModel");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -66,12 +67,21 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   });
 });
 exports.deleteMe = catchAsync(async (req, res, next) => {
-  await User.findByIdAndDelete(req.user.id, { active: false });
-  res.status(204).json({
-    status: "success",
-    data: null,
-  });
+  const userId = req.user._id;
+  const user = await User.findById(userId);
+  await User.deleteOne(user);
+
+  res.status(204).redirect("/");
 });
+exports.deleteWarning = (req, res) => {
+  const locals = {
+    message:
+      "if you accept your account will be deleted and all the tests you've created will be deleted too.",
+    action: "deleteMe",
+    formAction: "POST",
+  };
+  res.status(200).render("warning", { locals, user: req.user });
+};
 
 exports.createUser = catchAsync(async (req, res) => {
   const user = new User({

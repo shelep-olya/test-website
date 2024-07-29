@@ -19,7 +19,7 @@
       <form action="/login" method="POST">
         <button type="submit" class="icon-button"><img src="/images/change.png" alt="Change Account"></button>
       </form>
-      <form action="/deleteMe" method="POST">
+      <form action="/auth/deleteWarning" method="GET">
         <button type="submit" class="icon-button"><img src="/images/delete.png" alt="Delete Account"></button>
       </form>
     </div>
@@ -32,7 +32,7 @@
                   <div class="test">
                       <h2><span>name:</span> <%= test.name %></h2>
                       <p class="description">description: <%= test.description %></p>
-                      <a href="/test/<%= test._id %>">Take this test</a>
+                      <a href="/authTest/<%= test._id %>">Take this test</a>
                   </div>
               <% }); %>
           </div>
