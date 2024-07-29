@@ -23,7 +23,7 @@ exports.getTestPage = catchAsync(async (req, res, next) => {
   res.status(200).render("test", {
     newTest,
     author: author.name,
-    user: false,
+    user: req.user,
   });
 });
 exports.submitTest = catchAsync(async (req, res, next) => {
@@ -36,8 +36,8 @@ exports.submitTest = catchAsync(async (req, res, next) => {
         message: "Test not found",
       });
     }
-    const resultsArray = test.results;
-    postResFunc(req, res, resultsArray, testId);
+    const layout = "results";
+    postResFunc(req, res, test.results, testId, layout);
   } catch (err) {
     res.status(500).json({
       status: "error",
@@ -51,12 +51,7 @@ exports.getAboutPage = (req, res) => {
     user: false,
   });
 };
-exports.getResultsPage = (req, res) => {
-  res.render("results", {
-    title: "your results",
-    user: false,
-  });
-};
+
 exports.logIn = (req, res) => {
   res.render("login", { title: "log in", user: false });
 };

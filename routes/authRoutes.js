@@ -9,10 +9,21 @@ router.get("/moreTests", authController.protect, testController.getMoreTests);
 router.get("/welcome", authViewsController.getWelcomePage);
 router.get("/home", authController.protect, authViewsController.getHomePage);
 router.post("/logout", authController.logout);
+
 router.get(
   "/addTest",
   authController.protect,
   authViewsController.getAddTestForm
 );
 router.post("/deleteMe", authController.protect, authController.deleteMe);
+router.get(
+  "/authTest/:id",
+  authController.protect,
+  authViewsController.getTestPage
+);
+router.post(
+  "/submitAuthTest/:id",
+  authController.protect,
+  authViewsController.submitTest
+);
 module.exports = router;

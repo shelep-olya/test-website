@@ -13,7 +13,16 @@ const postResFunc = (req, res, resultsArray, id) => {
   const shuffledResults = shuffleArray(resultsArray);
   const n = Math.floor(Math.random() * shuffledResults.length);
   const resMessage = shuffledResults[n];
+
   res.render("results", { resMessage, user: false, id });
 };
 
+const authPostResFunc = (req, res, resultsArray, id) => {
+  const shuffledResults = shuffleArray(resultsArray);
+  const n = Math.floor(Math.random() * shuffledResults.length);
+  const resMessage = shuffledResults[n];
+
+  res.render("authResults", { resMessage, user: true, id });
+};
 module.exports = postResFunc;
+module.exports = authPostResFunc;

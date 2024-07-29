@@ -8,30 +8,4 @@
     <div class="image">
         <img  id="cute-image" src="/images/cute-img.jpg" alt="cute img" width="400px">
 
-<script>
-    let imageIndex = 0;
-let images = [
-  "cute-img.jpg",
-  "cute.jpg",
-  "cute1.jpg",
-  "cute2.jpg",
-  "cute3.jpg",
-  "cute5.jpg",
-  "cute6.jpg",
-];
-function getRandomImage() {
-  const randomIndex = Math.floor(Math.random() * images.length);
-  return images[randomIndex];
-}
-function changePhoto() {
-  const cuteImage = document.getElementById("cute-image");
-  const newImageUrl = `/images/${getRandomImage()}`;
-  cuteImage.src = newImageUrl;
-}
-
-window.onload = () => {
-  changePhoto();
-  setInterval(changePhoto, 1000 * 60 * 10);
-};
-
-</script>
+<script src="/scripts/changePhoto.js"></script>
