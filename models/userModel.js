@@ -13,7 +13,6 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "Please, enter name."],
-    unique: true,
   },
   email: {
     type: String,
@@ -60,7 +59,7 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre("deleteOne", async function (next) {
   try {
-    const userId = this.getQuery()["_id"]; // Retrieve the user ID from the query
+    const userId = this.getQuery()["_id"];
     await Test.deleteMany({ author: userId });
     next();
   } catch (err) {

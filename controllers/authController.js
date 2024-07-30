@@ -9,33 +9,66 @@ const { createAndSendToken } = require("./../utils/auth");
 const { promisify } = require("util");
 
 exports.signup = catchAsync(async (req, res, next) => {
-  const data = {
-    name: req.body.username,
-    password: req.body.password,
-    passwordConfirm: req.body.passwordConfirm,
-    email: req.body.email,
-  };
+  const { username, password, passwordConfirm, email } = req.body;
+
+  // Validate email
+  if (!validator.isEmail(email)) {
+    return res.status(400).render("signup", {
+      message: "Invalid email format.",
+      username,
+      email,
+      user: false,
+    });
+  }
+
+  // Validate password length
+  if (password.length < 8) {
+    return res.status(400).render("signup", {
+      message: "Password must be at least 8 characters long.",
+      username,
+      email,
+      user: false,
+    });
+  }
+
+  // Check if passwords match
+  if (password !== passwordConfirm) {
+    return res.status(400).render("signup", {
+      message: "Passwords do not match.",
+      username,
+      email,
+      user: false,
+    });
+  }
+
+  // Create the new user
+  const data = { name: username, password, passwordConfirm, email };
   const newUser = await User.create(data);
+
+  // Redirect to login page after signup
   const locals = {
     title: "welcome",
     isAuth: true,
+    message: null, // Ensure message is initialized
   };
-  createAndSendToken(newUser, 201, res, "login.ejs", { locals });
+  createAndSendToken(newUser, 201, res, "login", locals);
 });
+
+// Login Controller
 exports.login = catchAsync(async (req, res, next) => {
-  const email = req.body.email;
-  const password = req.body.password;
+  const { email, password } = req.body;
 
   const locals = {
     title: "home",
     isAuth: true,
+    message: null, // Ensure message is initialized
   };
 
   if (!email || !password) {
     return res.status(400).render("login", {
       message: "Please provide both email and password.",
-      email,
-      password,
+      email: email || "",
+      password: password || "",
       user: false,
     });
   }
@@ -43,7 +76,8 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!validator.isEmail(email)) {
     return res.status(400).render("login", {
       message: "Invalid email format.",
-      email,
+      email: email || "",
+      password: password || "",
       user: false,
     });
   }
@@ -51,21 +85,23 @@ exports.login = catchAsync(async (req, res, next) => {
   if (password.length < 8) {
     return res.status(400).render("login", {
       message: "Password must be at least 8 characters long.",
-      email,
-      password,
-      user: false,
-    });
-  }
-  const user = await User.findOne({ email });
-  if (!user || !(await user.correctPassword(password, user.password))) {
-    return res.status(401).render("login", {
-      message: "Incorrect email or password.",
-      email,
+      email: email || "",
+      password: password || "",
       user: false,
     });
   }
 
-  createAndSendToken(user, 200, res, "home", { locals });
+  const user = await User.findOne({ email });
+  if (!user || !(await user.correctPassword(password, user.password))) {
+    return res.status(401).render("login", {
+      message: "Incorrect email or password.",
+      email: email || "",
+      password: password || "",
+      user: false,
+    });
+  }
+
+  createAndSendToken(user, 200, res, "home", locals);
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
