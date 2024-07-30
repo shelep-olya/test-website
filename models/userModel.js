@@ -12,11 +12,11 @@ const defaultPhotoData = fs.readFileSync(defaultPhotoPath);
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "Please, enter name."],
+    required: [true, "Please enter your name."],
   },
   email: {
     type: String,
-    required: [true, "Please enter email."],
+    required: [true, "Please enter your email."],
     lowercase: true,
     unique: true,
     validate: [validator.isEmail, "Please enter a valid email."],
@@ -25,17 +25,15 @@ const userSchema = new mongoose.Schema({
     data: {
       type: Buffer,
       default: defaultPhotoData,
-      required: false,
     },
     contentType: {
       type: String,
-      required: false,
       default: "image/png",
     },
   },
   password: {
     type: String,
-    required: [true, "Please enter password."],
+    required: [true, "Please enter your password."],
     minlength: 8,
   },
   passwordConfirm: {
@@ -55,6 +53,8 @@ const userSchema = new mongoose.Schema({
       default: 0,
     },
   ],
+  passwordResetToken: String,
+  passwordResetTokenExpires: Date,
 });
 
 userSchema.pre("deleteOne", async function (next) {
@@ -66,6 +66,7 @@ userSchema.pre("deleteOne", async function (next) {
     next(err);
   }
 });
+
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   this.password = await bcrypt.hash(this.password, 12);
@@ -86,7 +87,7 @@ userSchema.methods.createPasswordResetToken = function () {
     .createHash("sha256")
     .update(resetToken)
     .digest("hex");
-  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+  this.passwordResetTokenExpires = Date.now() + 10 * 60 * 1000;
   return resetToken;
 };
 

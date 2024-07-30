@@ -51,8 +51,19 @@ exports.getAboutPage = (req, res) => {
 };
 
 exports.logIn = (req, res) => {
-  res.render("login", { title: "log in", user: false, message: null });
+  res.render("login", {
+    title: "log in",
+    user: false,
+    message: null,
+    showForgotPassword: 0,
+  });
 };
 exports.signUp = (req, res) => {
   res.render("signup", { title: "sign up", user: false, message: null });
+};
+exports.getForgotPasswordPage = (req, res) => {
+  res.render("forgotPassword", { title: "forgot password", user: false });
+};
+exports.getResetPasswordPage = (req, res) => {
+  res.render("resetPassword", { user: false });
 };

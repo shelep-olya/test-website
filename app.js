@@ -1,6 +1,9 @@
 const path = require("path");
 const express = require("express");
 const expressLayout = require("express-ejs-layouts");
+const session = require("express-session");
+const dotenv = require("dotenv");
+dotenv.config({ path: "./config.env" });
 const rateLimit = require("express-rate-limit");
 const bodyParser = require("body-parser");
 const helmet = require("helmet");
@@ -23,7 +26,13 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(expressLayout);
-
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 app.use("/auth", userRouter);
 app.use("/", testRouter);
 app.use("/", authRouter);

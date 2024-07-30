@@ -27,10 +27,13 @@
           required>
       </div>
       <button type="submit" class="submit-btn">Login</button>
+      <% if (showForgotPassword) { %>
+        <p><a href="/forgotPassword" class="forgot-password">Forgot Password?</a></p>
+      <% } %>
     </form>
     <p>Don't have an account? <a href="/signup">Sign up</a></p>
   </div>
 </div>
 </div>
-  <script src="/scripts/alert.js"></script>
+<script src="/scripts/alert.js"></script>
     
