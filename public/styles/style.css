@@ -124,7 +124,6 @@ h2 {
 .name-form-group {
   margin-bottom: 15px;
 }
-
 .name-form-group label {
   display: block;
   font-weight: bold;
@@ -136,6 +135,19 @@ h2 {
   font-size: 16px;
   border: 1px solid #b7c2b7;
   border-radius: 3px;
+  transition: border-color 0.3s;
+}
+.name-form-group input.invalid {
+  border-color: red;
+}
+.error-message {
+  color: red;
+  font-size: 14px;
+}
+.error-alert {
+  color: red;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 .wrapper {
   border-style: dashed;

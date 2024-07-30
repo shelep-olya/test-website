@@ -51,7 +51,7 @@ exports.getAboutPage = (req, res) => {
 };
 
 exports.logIn = (req, res) => {
-  res.render("login", { title: "log in", user: false });
+  res.render("login", { title: "log in", user: false, message: null });
 };
 exports.signUp = (req, res) => {
   res.render("signup", { title: "sign up", user: false });

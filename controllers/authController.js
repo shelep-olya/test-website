@@ -1,4 +1,5 @@
 const crypto = require("crypto");
+const validator = require("validator");
 const catchAsync = require("./../utils/catch-async");
 const jwt = require("jsonwebtoken");
 const AppError = require("./../utils/app-error");
@@ -21,23 +22,50 @@ exports.signup = catchAsync(async (req, res, next) => {
   };
   createAndSendToken(newUser, 201, res, "login.ejs", { locals });
 });
-
 exports.login = catchAsync(async (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
-  console.log(req.body);
-  if (!email || !password) {
-    return next(new AppError("Please provide password & email.", 400));
-  }
-  const user = await User.findOne({ email });
-  if (!user || !(await user.correctPassword(password, user.password))) {
-    return next(new AppError("Incorrect password or email.", 401));
-  }
+
   const locals = {
     title: "home",
     isAuth: true,
   };
-  createAndSendToken(user, 200, res, "home.ejs", { locals });
+
+  if (!email || !password) {
+    return res.status(400).render("login", {
+      message: "Please provide both email and password.",
+      email,
+      password,
+      user: false,
+    });
+  }
+
+  if (!validator.isEmail(email)) {
+    return res.status(400).render("login", {
+      message: "Invalid email format.",
+      email,
+      user: false,
+    });
+  }
+
+  if (password.length < 8) {
+    return res.status(400).render("login", {
+      message: "Password must be at least 8 characters long.",
+      email,
+      password,
+      user: false,
+    });
+  }
+  const user = await User.findOne({ email });
+  if (!user || !(await user.correctPassword(password, user.password))) {
+    return res.status(401).render("login", {
+      message: "Incorrect email or password.",
+      email,
+      user: false,
+    });
+  }
+
+  createAndSendToken(user, 200, res, "home", { locals });
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
