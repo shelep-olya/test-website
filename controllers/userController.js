@@ -14,58 +14,11 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + "-" + file.originalname);
   },
 });
-
 exports.upload = multer({
   storage: storage,
   limits: { fileSize: 1000000 },
-  fileFilter: function (req, file, cb) {
-    checkFileType(file, cb);
-  },
 }).single("photo");
 
-function checkFileType(file, cb) {
-  const filetypes = /jpeg|jpg|png|gif/;
-  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-  const mimetype = filetypes.test(file.mimetype);
-
-  if (mimetype && extname) {
-    return cb(null, true);
-  } else {
-    cb("Error: Images Only!");
-  }
-}
-
-const filterObj = (obj, ...allowedFields) => {
-  const newObj = {};
-  Object.keys(obj).forEach((el) => {
-    if (allowedFields.includes(el)) newObj[el] = obj[el];
-  });
-  return newObj;
-};
-
-exports.updateMe = catchAsync(async (req, res, next) => {
-  upload(req, res, async (err) => {
-    if (err) {
-      return next(new AppError(err, 400));
-    } else {
-      const filteredBody = filterObj(req.body, "name", "email");
-      if (req.file) {
-        filteredBody.photo = req.file.filename;
-      }
-
-      const updatedUser = await User.findByIdAndUpdate(
-        req.user.id,
-        filteredBody,
-        {
-          new: true,
-          runValidators: true,
-        }
-      );
-
-      res.status(200).redirect("home");
-    }
-  });
-});
 exports.deleteMe = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const user = await User.findById(userId);
@@ -73,6 +26,7 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
 
   res.status(204).redirect("/");
 });
+
 exports.deleteWarning = (req, res) => {
   const locals = {
     message:
@@ -82,23 +36,19 @@ exports.deleteWarning = (req, res) => {
   };
   res.status(200).render("warning", { locals, user: req.user });
 };
+exports.updatePhoto = catchAsync(async (req, res, next) => {
+  if (!req.file) {
+    return next(new AppError("No file uploaded", 400));
+  }
 
-exports.createUser = catchAsync(async (req, res) => {
-  const user = new User({
-    name: req.body.name,
-    email: req.body.email,
-    photo: {
-      data: req.file.filename,
-      contentType: "image/png",
-    },
-    password: req.body.password,
-    passwordConfirm: req.body.passwordConfirm,
+  const filteredBody = { photo: req.file.path };
+
+  const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
+    new: true,
+    runValidators: true,
   });
-  user.save();
-  res.status(201).json(user);
-});
 
+  res.status(200).render("home", { user: updatedUser });
+});
 exports.getAllUsers = handlerFactory.getAll(User);
-exports.getUser = handlerFactory.getOne(User);
-exports.updateUser = handlerFactory.updateOne(User);
 exports.deleteUser = handlerFactory.deleteOne(User);

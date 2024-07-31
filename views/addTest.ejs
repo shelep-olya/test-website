@@ -1,7 +1,22 @@
 <div class="add-test">
  <form action="/addNumberOfQuestions" method="POST">
-    <input type="number" name="numberOfQuestions"  placeholder="number of questions" required>
-    <input type="number" name="numberOfResults" placeholder="number of results" required>
+    <input type="number" name="numberOfQuestions"  placeholder="number of questions" required min="1">
+    <input type="number" name="numberOfResults" placeholder="number of results" required min="2">
     <button type="submit">next</button>
  </form> 
 </div>
+<script>
+   document.addEventListener("DOMContentLoaded", function() {
+     const form = document.getElementById('testForm');
+     
+     form.addEventListener('submit', function(event) {
+       const numberOfQuestions = parseInt(form['numberOfQuestions'].value, 10);
+       const numberOfResults = parseInt(form['numberOfResults'].value, 10);
+ 
+       if (numberOfQuestions < 1 || numberOfResults < 2) {
+         event.preventDefault(); 
+         alert('Number of questions must be at least 1 and number of results must be at least 2.');
+       }
+     });
+   });
+ </script>

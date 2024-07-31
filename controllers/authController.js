@@ -208,6 +208,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   user.passwordResetTokenExpires = undefined;
   await user.save();
 
+  // 4. Log the user in and send a JWT token
   const jwt = signToken(user._id);
   res.cookie("jwt", token, {
     expires: new Date(

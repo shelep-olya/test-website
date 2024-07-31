@@ -8,6 +8,7 @@ exports.getHomePage = (req, res) => {
     user: false,
   });
 };
+
 exports.getTestPage = catchAsync(async (req, res, next) => {
   const testId = req.params.id;
   const newTest = await Test.findById(testId);

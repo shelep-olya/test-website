@@ -10,7 +10,6 @@ const defaultPhotoPath = path.join(__dirname, "../public/uploads/default.jpg");
 const defaultPhotoData = fs.readFileSync(defaultPhotoPath);
 
 const userSchema = new mongoose.Schema({
-  // Ваші існуючі поля
   name: { type: String, required: [true, "Please enter your name."] },
   email: {
     type: String,

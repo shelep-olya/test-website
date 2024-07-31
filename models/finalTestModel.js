@@ -47,6 +47,7 @@ const testSchema = new mongoose.Schema({
       message: (props) =>
         `Number of results (${props.value}) does not match the number of results in the array (${this.results.length}).`,
     },
+    min: 2,
   },
   results: {
     type: [String],

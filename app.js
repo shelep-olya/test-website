@@ -39,7 +39,6 @@ app.use("/", testRouter);
 app.use("/", authRouter);
 app.use("/", viewsRouter);
 app.use("/", messageRouter);
-app.use(express.urlencoded({ extended: true }));
 const limiter = rateLimit({
   max: 1000,
   windowMs: 60 * 60 * 1000,

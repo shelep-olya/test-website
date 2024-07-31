@@ -586,6 +586,62 @@ form textarea {
   flex-wrap: wrap;
   gap: 20px;
 }
+.profile-photo-container {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+}
+
+.profile-photo-container .profile-photo {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.profile-photo-container .photo-upload-form {
+  display: none; /* Hide the form initially */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 10px;
+  border-radius: 8px;
+  color: white;
+}
+
+.profile-photo-container:hover .photo-upload-form {
+  display: block; /* Show the form on hover */
+}
+
+.photo-upload-form input[type="file"] {
+  display: none; /* Hide the file input itself */
+}
+
+.photo-upload-form label {
+  cursor: pointer;
+  color: #fff;
+  text-decoration: underline;
+}
+
+.photo-upload-form button {
+  background-color: #477548;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.photo-upload-form button:hover {
+  background-color: #5a8a5e;
+}
+
+.tooltip {
+  display: none;
+}
 p .test-form-link {
   font-size: 1.3rem;
   font-weight: 800;
