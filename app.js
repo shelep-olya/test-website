@@ -14,6 +14,7 @@ const userRouter = require("./routes/userRoutes");
 const testRouter = require("./routes/testRoutes");
 const authRouter = require("./routes/authRoutes");
 const viewsRouter = require("./routes/viewsRoutes");
+const messageRouter = require("./routes/messageRoutes");
 const AppError = require("./utils/app-error");
 const app = express();
 app.set("view engine", "ejs");
@@ -37,6 +38,7 @@ app.use("/auth", userRouter);
 app.use("/", testRouter);
 app.use("/", authRouter);
 app.use("/", viewsRouter);
+app.use("/", messageRouter);
 app.use(express.urlencoded({ extended: true }));
 const limiter = rateLimit({
   max: 1000,

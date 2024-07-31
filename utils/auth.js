@@ -18,6 +18,11 @@ const createAndSendToken = (user, statusCode, res, redirectUrl, locals) => {
   });
   res
     .status(statusCode)
-    .render(redirectUrl, { user, ...locals, message: locals.message || null });
+    .render(redirectUrl, {
+      user,
+      ...locals,
+      message: locals.message || null,
+      showForgotPassword: 0,
+    });
 };
 module.exports = { createAndSendToken };

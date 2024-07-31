@@ -10,10 +10,8 @@ const defaultPhotoPath = path.join(__dirname, "../public/uploads/default.jpg");
 const defaultPhotoData = fs.readFileSync(defaultPhotoPath);
 
 const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, "Please enter your name."],
-  },
+  // Ваші існуючі поля
+  name: { type: String, required: [true, "Please enter your name."] },
   email: {
     type: String,
     required: [true, "Please enter your email."],
@@ -22,14 +20,8 @@ const userSchema = new mongoose.Schema({
     validate: [validator.isEmail, "Please enter a valid email."],
   },
   photo: {
-    data: {
-      type: Buffer,
-      default: defaultPhotoData,
-    },
-    contentType: {
-      type: String,
-      default: "image/png",
-    },
+    data: { type: Buffer, default: defaultPhotoData },
+    contentType: { type: String, default: "image/png" },
   },
   password: {
     type: String,
@@ -46,15 +38,9 @@ const userSchema = new mongoose.Schema({
       message: "Passwords are not the same.",
     },
   },
-  tests: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Test",
-      default: 0,
-    },
-  ],
-  passwordResetToken: String,
-  passwordResetTokenExpires: Date,
+  tests: [{ type: mongoose.Schema.Types.ObjectId, ref: "Test", default: 0 }],
+  passwordResetToken: { type: String, default: null },
+  passwordResetTokenExpires: { type: Date, default: null },
 });
 
 userSchema.pre("deleteOne", async function (next) {
@@ -90,6 +76,13 @@ userSchema.methods.createPasswordResetToken = function () {
   this.passwordResetTokenExpires = Date.now() + 10 * 60 * 1000;
   return resetToken;
 };
+userSchema.pre("save", function (next) {
+  if (this.isNew) {
+    this.passwordResetToken = null;
+    this.passwordResetTokenExpires = null;
+  }
+  next();
+});
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;
