@@ -13,15 +13,28 @@
         <label for="photo">Upload new profile photo</label>
         <button type="submit">Update Photo</button>
       </form>
-      <form action="/logout" method="POST">
-        <button type="submit" class="icon-button"><img src="/images/logout.png" alt="Logout"></button>
-      </form>
-      <form action="/login" method="POST">
-        <button type="submit" class="icon-button"><img src="/images/change.png" alt="Change Account"></button>
-      </form>
-      <form action="/auth/deleteWarning" method="GET">
-        <button type="submit" class="icon-button"><img src="/images/delete.png" alt="Delete Account"></button>
-      </form>
+
+        <form action="/logout" method="POST" class="tooltip-container">
+          <button type="submit" class="icon-button">
+            <img src="/images/logout.png" alt="Logout">
+            <span class="tooltip-text">Logout</span>
+          </button>
+        </form>
+        
+        <form action="/changeAccount" method="GET" class="tooltip-container">
+          <button type="submit" class="icon-button">
+            <img src="/images/change.png" alt="Change Account">
+            <span class="tooltip-text">Change Account</span>
+          </button>
+        </form>
+        
+        <form action="/auth/deleteWarning" method="GET" class="tooltip-container">
+          <button type="submit" class="icon-button">
+            <img src="/images/delete.png" alt="Delete Account">
+            <span class="tooltip-text">Delete Account</span>
+          </button>
+        </form>
+
     </div>
     <div class="tests-container">
       <h2>Your Tests</h2>

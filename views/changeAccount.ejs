@@ -1,0 +1,54 @@
+<div class="main">
+    <div class="main-content">
+<div class="form-container">
+    <h2>Change Account</h2>
+    <% if (typeof message !== 'undefined' && message) { %>
+      <div class="error-alert" id="error-alert"><%= message %></div>
+    <% } %>
+    <form action="/auth/signup" method="POST">
+      <div class="name-form-group">
+        <label for="name">Name:</label>
+        <input 
+          type="text" 
+          id="name" 
+          name="username" 
+          placeholder="Enter your name" 
+          value="<%= typeof username !== 'undefined' ? username : '' %>" 
+          required>
+      </div>
+      <div class="name-form-group">
+        <label for="email">Email:</label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email" 
+          placeholder="Enter your email" 
+          value="<%= typeof email !== 'undefined' ? email : '' %>" 
+          required>
+      </div>
+      <div class="name-form-group">
+        <label for="password">Password:</label>
+        <input 
+          type="password" 
+          id="password" 
+          name="password" 
+          placeholder="Enter password" 
+          required>
+      </div>
+      <div class="name-form-group">
+        <label for="passwordConfirm">Confirm your password:</label>
+        <input 
+          type="password" 
+          id="passwordConfirm" 
+          name="passwordConfirm" 
+          placeholder="Confirm password" 
+          required>
+      </div>
+      <button type="submit" class="submit-btn">Create new Account</button>
+      <a href="/login">Have an account?</a>
+    </form>
+  </div>
+</div>
+</div>
+<script src="/scripts/alert.js"></script>
+  

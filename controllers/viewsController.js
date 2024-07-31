@@ -67,3 +67,6 @@ exports.getForgotPasswordPage = (req, res) => {
 exports.getResetPasswordPage = (req, res) => {
   res.render("resetPassword", { user: false });
 };
+exports.getChangeAccountPage = (req, res) => {
+  res.status(200).render("changeAccount", { user: false });
+};
