@@ -760,6 +760,14 @@ footer button {
 .contact-form .btn:hover {
   background: #799b5d;
 }
+.redirect-link {
+  color: #333;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.redirect-link:hover {
+  text-decoration: underline;
+}
 
 @media (max-width: 768px) {
   .header {
@@ -784,6 +792,11 @@ footer button {
     border-radius: 0.3rem;
     font-size: large;
     margin: 0.5rem;
+  }
+
+  .item {
+    width: 100%;
+    background-color: #3a523b;
   }
 
   .test-link,

@@ -4,11 +4,21 @@ const jwt = require("jsonwebtoken");
 const User = require("./../models/userModel");
 const { createAndSendToken } = require("./../utils/auth");
 const { promisify } = require("util");
-const sendEmail = require("../utils/email");
 const AppError = require("../utils/app-error");
-
 exports.signup = catchAsync(async (req, res, next) => {
   const { username, password, passwordConfirm, email } = req.body;
+
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+    const locals = {
+      title: "log in",
+      text: "You already have an account. Please log in.",
+      isAuth: true,
+      message: null,
+      showForgotPassword: false,
+    };
+    return res.render("login", { locals, user: false });
+  }
 
   if (!validator.isEmail(email)) {
     return res.status(400).render("signup", {
@@ -42,6 +52,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   const locals = {
     title: "welcome",
+    text: "log in",
     isAuth: true,
     message: null,
   };
@@ -53,6 +64,7 @@ exports.login = catchAsync(async (req, res, next) => {
 
   const locals = {
     title: "home",
+    text: "log in",
     isAuth: true,
     message: null,
   };
@@ -147,78 +159,4 @@ exports.isLoggedIn = catchAsync(async (req, res, next) => {
 exports.deleteMe = catchAsync(async (req, res, next) => {
   await User.findByIdAndDelete(req.user.id, { active: false });
   res.status(204).redirect("/");
-});
-
-exports.forgotPassword = catchAsync(async (req, res, next) => {
-  const user = await User.findOne({ email: req.body.email });
-  if (!user) {
-    return res.status(404).json({ message: "User not found." });
-  }
-
-  const resetToken = user.createPasswordResetToken();
-  await user.save({ validateBeforeSave: false });
-
-  const resetUrl = `${req.protocol}://${req.get(
-    "host"
-  )}/auth/resetPassword/${resetToken}`;
-  const message = `You have requested a password reset. Please use the link below to reset your password:\n\n${resetUrl}\n\nThe link is valid for 10 minutes.`;
-
-  try {
-    await sendEmail({
-      email: user.email,
-      subject: "Password Reset Request",
-      message,
-    });
-
-    res.status(200).json({
-      status: "success",
-      message: "Password reset link sent.",
-    });
-  } catch (err) {
-    user.passwordResetToken = undefined;
-    user.passwordResetTokenExpires = undefined;
-    await user.save({ validateBeforeSave: false });
-    console.log(err);
-    return next(
-      new AppError("Error sending email. Please try again later.", 500)
-    );
-  }
-});
-exports.resetPassword = catchAsync(async (req, res, next) => {
-  const { token, password, passwordConfirm } = req.body;
-  const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
-  const user = await User.findOne({
-    passwordResetToken: hashedToken,
-    passwordResetTokenExpires: { $gt: Date.now() },
-  });
-
-  if (!user) {
-    return res
-      .status(400)
-      .json({ message: "Token is invalid or has expired." });
-  }
-
-  if (password !== passwordConfirm) {
-    return res.status(400).json({ message: "Passwords do not match." });
-  }
-
-  user.password = password;
-  user.passwordConfirm = passwordConfirm;
-  user.passwordResetToken = undefined;
-  user.passwordResetTokenExpires = undefined;
-  await user.save();
-
-  // 4. Log the user in and send a JWT token
-  const jwt = signToken(user._id);
-  res.cookie("jwt", token, {
-    expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-    ),
-    httpOnly: true,
-  });
-
-  res.status(200).json({
-    status: "success",
-    message: "Password has been reset successfully.",
-  });
 });

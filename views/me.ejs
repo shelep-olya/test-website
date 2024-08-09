@@ -1,20 +1,7 @@
 <div class="profile-body">
   <div class="profile-container">
     <div class="user-info">
-      <div class="profile-photo-container">
-        <% if (user.photo) { %>
-          <img src="<%= user.photo %>" alt="<%= user.name %>" class="profile-photo">
-        <% } else { %>
-          <img src="/uploads/default.jpg" alt="Default photo" class="profile-photo">
-        <% } %>
      
-        <form action="/auth/updatePhoto" method="POST" enctype="multipart/form-data" class="photo-upload-form">
-          <input type="file" name="photo" accept="image/*" id="photo" required>
-          <label for="photo">Upload new profile photo</label>
-          <button type="submit">Update Photo</button>
-        </form>
-        <span class="tooltip">Change Photo</span>
-      </div>
       <h3 class="user-name"><%= user.name %></h3>
     </div>
     <div class="account-settings">
