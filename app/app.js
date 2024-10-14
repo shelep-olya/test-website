@@ -48,8 +48,5 @@ app.use("/", limiter);
 app.use(express.json({ limit: "10kb" }));
 app.use(mongoSanitize());
 app.use(xss());
-app.all("*", (req, res, next) => {
-  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
-});
 
 module.exports = app;
